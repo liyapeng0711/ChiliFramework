@@ -25,6 +25,8 @@
 #include "Graphics.h"
 #include "Poo.h"
 #include "Dude.h"
+#include "Title.h"
+#include "GameOver.h"
 
 class Game
 {
@@ -38,8 +40,6 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void DrawGameTitle(int x, int y);
-	void DrawGameOver(int x, int y);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -52,6 +52,8 @@ private:
 	Poo poo2;
 	bool isGameStart = false;
 	bool isGameOver = false;
+	Title title;
+	GameOver gameover;
 
 	/********************************/
 };
