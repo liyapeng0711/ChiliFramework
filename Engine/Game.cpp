@@ -77,6 +77,7 @@ void Game::UpdateModel()
 		height = wnd.mouse.GetPosY() - y;
 	}
 	ClampRectDim(x, y, width, height);
+	
 }
 
 void Game::ClampRectDim(int & x, int & y, int & width, int & height)
