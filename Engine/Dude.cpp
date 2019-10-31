@@ -1,7 +1,7 @@
 #include "Dude.h"
 #include "Graphics.h"
 
-void Dude::Update()
+void Dude::ClampXY()
 {
 	if (x < 0)
 	{
@@ -446,4 +446,24 @@ bool Dude::IsCollide(int x2, int y2, int width2, int height2)
 	const int box2Down = y2 + height2 - 1;
 	return box1Left <= box2Right && box1Right >= box2Left &&
 		box1Up <= box2Down && box1Down >= box2Up;
+}
+
+void Dude::AddX(int a)
+{
+	x += a;
+}
+
+void Dude::AddY(int a)
+{
+	y += a;
+}
+
+int Dude::GetX() const
+{
+	return x;
+}
+
+int Dude::GetY() const
+{
+	return y;
 }

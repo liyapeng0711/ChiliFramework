@@ -20,30 +20,20 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
-#include <random>
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
+	wnd(wnd),
+	gfx(wnd),
+	rng(rd()),
+	distX(0, gfx.ScreenWidth - Poo::width),
+	distY(0, gfx.ScreenHeight - Poo::height),
+	dude(300, 400),
+	poo0(distX(rng), distY(rng), 1, 1),
+	poo1(distX(rng), distY(rng), -1, 1),
+	poo2(distX(rng), distY(rng), -1, -1)
 {
-	std::random_device rd;
-	std::mt19937_64 rng(rd());
-	std::uniform_int_distribution<int> distX(0, gfx.ScreenWidth - Poo::width);
-	std::uniform_int_distribution<int> distY(0, gfx.ScreenHeight - Poo::height);
-	poo0.x = distX(rng);
-	poo0.y = distY(rng);
-	poo1.x = distX(rng);
-	poo1.y = distY(rng);
-	poo2.x = distX(rng);
-	poo2.y = distY(rng);
 
-	poo0.vx = 1;
-	poo0.vy = 1;
-	poo1.vx = -1;
-	poo1.vy = 1;
-	poo2.vx = 1;
-	poo2.vy = -1;
 }
 
 void Game::Go()
@@ -60,39 +50,39 @@ void Game::UpdateModel()
 	{
 		if (wnd.kbd.KeyIsPressed(VK_UP))
 		{
-			dude.y -= 3;
+			dude.AddY(-3);
 		}
 		if (wnd.kbd.KeyIsPressed(VK_DOWN))
 		{
-			dude.y += 3;
+			dude.AddY(3);
 		}
 		if (wnd.kbd.KeyIsPressed(VK_LEFT))
 		{
-			dude.x -= 3;
+			dude.AddX(-3);
 		}
 		if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 		{
-			dude.x += 3;
+			dude.AddX(3);
 		}
 		
-		dude.Update();
+		dude.ClampXY();
 
-		if (!poo0.isEaten)
+		if (!poo0.IsEaten())
 		{
-			poo0.isEaten = dude.IsCollide(poo0.x, poo0.y, Poo::width, Poo::height);
-			poo0.Update();
+			poo0.UpdateAndClamp();
+			poo0.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
 		}
-		if (!poo1.isEaten)
+		if (!poo1.IsEaten())
 		{
-			poo1.isEaten = dude.IsCollide(poo1.x, poo1.y, Poo::width, Poo::height);
-			poo1.Update();
+			poo1.UpdateAndClamp();
+			poo1.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
 		}
-		if (!poo2.isEaten)
+		if (!poo2.IsEaten())
 		{
-			poo2.isEaten = dude.IsCollide(poo2.x, poo2.y, Poo::width, Poo::height);
-			poo2.Update();
+			poo2.UpdateAndClamp();
+			poo2.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
 		}
-		if (poo0.isEaten&&poo1.isEaten&&poo2.isEaten)
+		if (poo0.IsEaten() &&poo1.IsEaten() &&poo2.IsEaten())
 		{
 			isGameOver = true;
 		}
@@ -116,15 +106,15 @@ void Game::ComposeFrame()
 		}
 
 		dude.Draw(gfx);
-		if (!poo0.isEaten)
+		if (!poo0.IsEaten())
 		{
 			poo0.Draw(gfx);
 		}
-		if (!poo1.isEaten)
+		if (!poo1.IsEaten())
 		{
 			poo1.Draw(gfx);
 		}
-		if (!poo2.isEaten)
+		if (!poo2.IsEaten())
 		{
 			poo2.Draw(gfx);
 		}

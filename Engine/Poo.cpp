@@ -1,7 +1,7 @@
 #include "Poo.h"
 #include "Graphics.h"
 
-void Poo::Update()
+void Poo::UpdateAndClamp()
 {
 	x += vx;
 	y += vy;
@@ -36,6 +36,20 @@ void Poo::Update()
 		
 	}
 
+}
+
+void Poo::TestCollide(int x2, int y2, int width2, int height2)
+{
+	const int box1Left = x;
+	const int box1Right = x + width - 1;
+	const int box1Up = y;
+	const int box1Down = y + height - 1;
+	const int box2Left = x2;
+	const int box2Right = x2 + width2 - 1;
+	const int box2Up = y2;
+	const int box2Down = y2 + height2 - 1;
+	isEaten= box1Left <= box2Right && box1Right >= box2Left &&
+		box1Up <= box2Down && box1Down >= box2Up;
 }
 
 void Poo::Draw(Graphics & gfx) const
@@ -271,4 +285,9 @@ void Poo::Draw(Graphics & gfx) const
 	gfx.PutPixel(4 + x, 23 + y, 51, 28, 0);
 	gfx.PutPixel(5 + x, 23 + y, 51, 28, 0);
 	gfx.PutPixel(6 + x, 23 + y, 51, 28, 0);
+}
+
+bool Poo::IsEaten() const
+{
+	return isEaten;
 }

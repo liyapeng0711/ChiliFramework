@@ -27,6 +27,7 @@
 #include "Dude.h"
 #include "Title.h"
 #include "GameOver.h"
+#include <random>
 
 class Game
 {
@@ -46,6 +47,10 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	std::random_device rd;
+	std::mt19937_64 rng;
+	std::uniform_int_distribution<int> distX;
+	std::uniform_int_distribution<int> distY;
 	Dude dude;
 	Poo poo0;
 	Poo poo1;
