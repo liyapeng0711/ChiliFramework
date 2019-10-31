@@ -1,5 +1,7 @@
 #pragma once
 #include"Graphics.h"
+#include"Keyboard.h"
+
 class Dude
 {
 public:
@@ -9,6 +11,7 @@ public:
 		y = y_1;
 	}
 	void ClampXY();
+	void Update(const Keyboard& kbd);
 	void Draw(Graphics& gfx)const;
 	bool IsCollide(int x2, int y2, int width2, int height2);
 	void AddX(int a);

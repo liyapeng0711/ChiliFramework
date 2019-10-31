@@ -38,16 +38,16 @@ void Poo::UpdateAndClamp()
 
 }
 
-void Poo::TestCollide(int x2, int y2, int width2, int height2)
+void Poo::TestCollide(const Dude& dude)
 {
 	const int box1Left = x;
 	const int box1Right = x + width - 1;
 	const int box1Up = y;
 	const int box1Down = y + height - 1;
-	const int box2Left = x2;
-	const int box2Right = x2 + width2 - 1;
-	const int box2Up = y2;
-	const int box2Down = y2 + height2 - 1;
+	const int box2Left = dude.GetX();
+	const int box2Right = dude.GetX() + Dude::width - 1;
+	const int box2Up = dude.GetY();
+	const int box2Down = dude.GetY() + Dude::height - 1;
 	isEaten= box1Left <= box2Right && box1Right >= box2Left &&
 		box1Up <= box2Down && box1Down >= box2Up;
 }

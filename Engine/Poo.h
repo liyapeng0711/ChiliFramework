@@ -1,5 +1,6 @@
 #pragma once
 #include"Graphics.h"
+#include"Dude.h"
 class Poo
 {
 public:
@@ -11,7 +12,7 @@ public:
 		vy = vy_1;
 	}
 	void UpdateAndClamp();
-	void TestCollide(int x2, int y2, int width2, int height2);
+	void TestCollide(const Dude& dude);
 	void Draw(Graphics& gfx)const;
 	bool IsEaten()const;
 private:

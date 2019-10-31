@@ -54,69 +54,53 @@ void Game::UpdateModel()
 {
 	if (isGameStart)
 	{
-		if (wnd.kbd.KeyIsPressed(VK_UP))
-		{
-			dude.AddY(-3);
-		}
-		if (wnd.kbd.KeyIsPressed(VK_DOWN))
-		{
-			dude.AddY(3);
-		}
-		if (wnd.kbd.KeyIsPressed(VK_LEFT))
-		{
-			dude.AddX(-3);
-		}
-		if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-		{
-			dude.AddX(3);
-		}
-		
+		dude.Update(wnd.kbd);		
 		dude.ClampXY();
 
 		if (!poo0.IsEaten())
 		{
 			poo0.UpdateAndClamp();
-			poo0.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo0.TestCollide(dude);
 		}
 		if (!poo1.IsEaten())
 		{
 			poo1.UpdateAndClamp();
-			poo1.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo1.TestCollide(dude);
 		}
 		if (!poo2.IsEaten())
 		{
 			poo2.UpdateAndClamp();
-			poo2.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo2.TestCollide(dude);
 		}
 		if (!poo3.IsEaten())
 		{
 			poo3.UpdateAndClamp();
-			poo3.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo3.TestCollide(dude);
 		}
 		if (!poo4.IsEaten())
 		{
 			poo4.UpdateAndClamp();
-			poo4.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo4.TestCollide(dude);
 		}
 		if (!poo5.IsEaten())
 		{
 			poo5.UpdateAndClamp();
-			poo5.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo5.TestCollide(dude);
 		}
 		if (!poo6.IsEaten())
 		{
 			poo6.UpdateAndClamp();
-			poo6.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo6.TestCollide(dude);
 		}
 		if (!poo7.IsEaten())
 		{
 			poo7.UpdateAndClamp();
-			poo7.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo7.TestCollide(dude);
 		}
 		if (!poo8.IsEaten())
 		{
 			poo8.UpdateAndClamp();
-			poo8.TestCollide(dude.GetX(), dude.GetY(), Dude::width, Dude::height);
+			poo8.TestCollide(dude);
 		}
 		if (poo0.IsEaten() &&poo1.IsEaten() &&poo2.IsEaten()&&
 			poo3.IsEaten() && poo4.IsEaten() && poo5.IsEaten()&&

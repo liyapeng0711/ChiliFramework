@@ -30,6 +30,26 @@ void Dude::ClampXY()
 	}
 }
 
+void Dude::Update(const Keyboard & kbd)
+{
+	if (kbd.KeyIsPressed(VK_UP))
+	{
+		y -= 3;
+	}
+	if (kbd.KeyIsPressed(VK_DOWN))
+	{
+		y += 3;
+	}
+	if (kbd.KeyIsPressed(VK_LEFT))
+	{
+		x -= 3;
+	}
+	if (kbd.KeyIsPressed(VK_RIGHT))
+	{
+		x += 3;
+	}
+}
+
 void Dude::Draw(Graphics& gfx)const
 {
 	gfx.PutPixel(0 + x, 0 + y, 158, 110, 90);
