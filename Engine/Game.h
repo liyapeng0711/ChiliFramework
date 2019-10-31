@@ -23,8 +23,6 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Poo.h"
-#include "Dude.h"
 
 class Game
 {
@@ -38,8 +36,6 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void DrawGameTitle(int x, int y);
-	void DrawGameOver(int x, int y);
 	void ClampRectDim(int& x, int& y, int& width, int& height);
 	/********************************/
 private:
@@ -47,12 +43,6 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	Dude dude;
-	Poo poo0;
-	Poo poo1;
-	Poo poo2;
-	bool isGameStart = false;
-	bool isGameOver = false;
 	int x = 100;
 	int y = 100;
 	int width = 50;
