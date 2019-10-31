@@ -40,7 +40,6 @@ private:
 	/*  User Functions              */
 	void DrawGameTitle(int x, int y);
 	void DrawGameOver(int x, int y);
-	void ClampRectDim(int& x, int& y, int& width, int& height);
 	/********************************/
 private:
 	MainWindow& wnd;
@@ -53,10 +52,6 @@ private:
 	Poo poo2;
 	bool isGameStart = false;
 	bool isGameOver = false;
-	int x = 100;
-	int y = 100;
-	int width = 50;
-	int height = 50;
 
 	/********************************/
 };

@@ -56,45 +56,6 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (wnd.kbd.KeyIsPressed(VK_UP))
-	{
-		y -= 3;
-	}
-	if (wnd.kbd.KeyIsPressed(VK_DOWN))
-	{
-		y += 3;
-	}
-	if (wnd.kbd.KeyIsPressed(VK_LEFT))
-	{
-		x -= 3;
-	}
-	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-	{
-		x += 3;
-	}
-	if (wnd.kbd.KeyIsPressed('W'))
-	{
-		height -= 1;
-	}
-	if (wnd.kbd.KeyIsPressed('S'))
-	{
-		height += 1;
-	}
-	if (wnd.kbd.KeyIsPressed('A'))
-	{
-		width -= 1;
-	}
-	if (wnd.kbd.KeyIsPressed('D'))
-	{
-		width += 1;
-	}
-	if (wnd.mouse.LeftIsPressed())
-	{
-		width = wnd.mouse.GetPosX() - x;
-		height = wnd.mouse.GetPosY() - y;
-	}
-	ClampRectDim(x, y, width, height);
-
 	if (isGameStart)
 	{
 		if (wnd.kbd.KeyIsPressed(VK_UP))
@@ -28491,86 +28452,8 @@ void Game::DrawGameOver(int x, int y)
 	gfx.PutPixel(83 + x, 63 + y, 0, 146, 14);
 }
 
-void Game::ClampRectDim(int & x, int & y, int & width, int & height)
-{
-	if (width > 0)
-	{
-		if (x < 0)
-		{
-			x = 0;
-		}
-		while (x + width > Graphics::ScreenWidth)
-		{
-			if (x > Graphics::ScreenWidth - 1)
-			{
-				x = Graphics::ScreenWidth - 1;
-			}
-			else
-			{
-				width = Graphics::ScreenWidth - x;
-			}
-		}
-	}
-	else
-	{
-		while (x + width < 0)
-		{
-			if (x < 0)
-			{
-				x = 0;
-			}
-			else
-			{
-				width = -x;
-			}
-		}
-		if (x > Graphics::ScreenWidth)
-		{
-			x = Graphics::ScreenWidth;
-		}
-	}
-
-	if (height > 0)
-	{
-		if (y < 0)
-		{
-			y = 0;
-		}
-		while (y + height > Graphics::ScreenHeight)
-		{
-			if (y > Graphics::ScreenHeight - 1)
-			{
-				y = Graphics::ScreenHeight - 1;
-			}
-			else
-			{
-				height = Graphics::ScreenHeight - y;
-			}
-		}
-	}
-	else
-	{
-		while (y + height < 0)
-		{
-			if (y < 0)
-			{
-				y = 0;
-			}
-			else
-			{
-				height = -y;
-			}
-		}
-		if (y > Graphics::ScreenHeight)
-		{
-			y = Graphics::ScreenHeight;
-		}
-	}
-}
-
 void Game::ComposeFrame()
 {
-	gfx.DrawRectDim(x, y, width, height);
 	if (isGameStart)
 	{
 		if (isGameOver)
