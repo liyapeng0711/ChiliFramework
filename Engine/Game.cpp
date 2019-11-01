@@ -29,7 +29,8 @@ Game::Game(MainWindow& wnd)
 	distX(0, gfx.ScreenWidth - Poo::width),
 	distY(0, gfx.ScreenHeight - Poo::height),
 	dude(300, 400),
-	cube(distX(rng),distY(rng))
+	cube(distX(rng),distY(rng)),
+	counter(50,20)
 {
 	std::uniform_int_distribution<int> distV(-1, 1);
 	for (int i = 0; i < size; ++i)
@@ -76,9 +77,9 @@ void Game::UpdateModel()
 		cube.TestCollide(dude);
 		if (cube.IsEaten())
 		{
+			counter.AddOne();
 			cube.InitXY(distX(rng), distY(rng));
 		}
-
 	}
 	else
 	{
@@ -97,7 +98,7 @@ void Game::ComposeFrame()
 		{
 			gameover.Draw(gfx, 358, 268);
 		}
-
+		counter.Draw(gfx);
 		dude.Draw(gfx);
 		for (int i = 0; i < size; ++i)
 		{

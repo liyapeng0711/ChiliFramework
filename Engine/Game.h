@@ -29,6 +29,7 @@
 #include "GameOver.h"
 #include <random>
 #include "Cube.h"
+#include "Counter.h"
 
 class Game
 {
@@ -60,6 +61,7 @@ private:
 	Title title;
 	GameOver gameover;
 	Cube cube;
+	Counter counter;
 
 	/********************************/
 };
