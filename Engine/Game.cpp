@@ -33,7 +33,14 @@ Game::Game(MainWindow& wnd)
 	std::uniform_int_distribution<int> distV(-1, 1);
 	for (int i = 0; i < size; ++i)
 	{
-		poo[i].Init(distX(rng), distY(rng), distV(rng), distV(rng));
+		int vx = 0;
+		int vy = 0;
+		while (vx == 0 && vy == 0)
+		{
+			vx = distV(rng);
+			vy = distV(rng);
+		}
+		poo[i].Init(distX(rng), distY(rng), vx, vy);
 	}
 }
 

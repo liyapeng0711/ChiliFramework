@@ -52,7 +52,7 @@ private:
 	std::uniform_int_distribution<int> distX;
 	std::uniform_int_distribution<int> distY;
 	Dude dude;
-	static constexpr int size = 1000;
+	static constexpr int size = 20;
 	Poo poo[size];
 	bool isGameStart = false;
 	bool isGameOver = false;
