@@ -1,13 +1,12 @@
 #include "Cube.h"
-#include "Colors.h"
 
-void Cube::Draw(Graphics& gfx) const
+void Cube::Draw(Graphics& gfx)
 {
 	for (int i = 0; i < width; ++i)
 	{
 		for (int j = 0; j < height; ++j)
 		{
-			gfx.PutPixel(x + i, y + j, Colors::Red);
+			gfx.PutPixel(x + i, y + j, color);
 		}
 	}
 }
@@ -15,6 +14,22 @@ void Cube::Draw(Graphics& gfx) const
 bool Cube::IsEaten() const
 {
 	return isEaten;
+}
+
+void Cube::UpdateColor()
+{
+	count += 1;
+	count %= halfFreq * 2;
+	int tempCount = count;
+	tempCount %= halfFreq;
+	if (count < halfFreq)
+	{
+		color = Color(255 - 255 * tempCount / (halfFreq - 1), 255 * tempCount / (halfFreq - 1), 0);
+	}
+	else
+	{
+		color = Color(255 * tempCount / (halfFreq - 1), 255 - 255 * tempCount / (halfFreq - 1), 0);
+	}
 }
 
 void Cube::TestCollide(const Dude & dude)
@@ -36,4 +51,5 @@ void Cube::InitXY(int x_1, int y_1)
 	x = x_1;
 	y = y_1;
 	isEaten = false;
+	count = 0;
 }
