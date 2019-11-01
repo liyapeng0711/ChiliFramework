@@ -28,6 +28,7 @@
 #include "Title.h"
 #include "GameOver.h"
 #include <random>
+#include "Cube.h"
 
 class Game
 {
@@ -58,6 +59,7 @@ private:
 	bool isGameOver = false;
 	Title title;
 	GameOver gameover;
+	Cube cube;
 
 	/********************************/
 };

@@ -28,7 +28,8 @@ Game::Game(MainWindow& wnd)
 	rng(rd()),
 	distX(0, gfx.ScreenWidth - Poo::width),
 	distY(0, gfx.ScreenHeight - Poo::height),
-	dude(300, 400)
+	dude(300, 400),
+	cube(distX(rng),distY(rng))
 {
 	std::uniform_int_distribution<int> distV(-1, 1);
 	for (int i = 0; i < size; ++i)
@@ -54,9 +55,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (isGameStart)
+	if (isGameStart&&!isGameOver)
 	{
-		dude.Update(wnd.kbd);		
+		dude.Update(wnd.kbd);
 		dude.ClampXY();
 		for (int i = 0; i < size; ++i)
 		{
@@ -66,11 +67,17 @@ void Game::UpdateModel()
 				poo[i].TestCollide(dude);
 			}
 		}
-		isGameOver = true;
+		isGameOver = false;
 		for (int i = 0; i < size; ++i)
 		{
-			isGameOver = isGameOver&& poo[i].IsEaten();
+			isGameOver = isGameOver || poo[i].IsEaten();
 		}
+		cube.TestCollide(dude);
+		if (cube.IsEaten())
+		{
+			cube.InitXY(distX(rng), distY(rng));
+		}
+
 	}
 	else
 	{
@@ -93,11 +100,9 @@ void Game::ComposeFrame()
 		dude.Draw(gfx);
 		for (int i = 0; i < size; ++i)
 		{
-			if (!poo[i].IsEaten())
-			{
-				poo[i].Draw(gfx);
-			}
+			poo[i].Draw(gfx);
 		}
+		cube.Draw(gfx);
 	}
 	else
 	{
