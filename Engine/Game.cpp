@@ -28,18 +28,13 @@ Game::Game(MainWindow& wnd)
 	rng(rd()),
 	distX(0, gfx.ScreenWidth - Poo::width),
 	distY(0, gfx.ScreenHeight - Poo::height),
-	dude(300, 400),
-	poo0(distX(rng), distY(rng), 1, 1),
-	poo1(distX(rng), distY(rng), -1, 1),
-	poo2(distX(rng), distY(rng), -1, -1),
-	poo3(distX(rng), distY(rng), 1, -1),
-	poo4(distX(rng), distY(rng), -1, 1),
-	poo5(distX(rng), distY(rng), 1, -1),
-	poo6(distX(rng), distY(rng), 1, 1),
-	poo7(distX(rng), distY(rng), -1, 1),
-	poo8(distX(rng), distY(rng), 1, -1)
+	dude(300, 400)
 {
-
+	std::uniform_int_distribution<int> distV(-1, 1);
+	for (int i = 0; i < size; ++i)
+	{
+		poo[i].Init(distX(rng), distY(rng), distV(rng), distV(rng));
+	}
 }
 
 void Game::Go()
@@ -56,57 +51,18 @@ void Game::UpdateModel()
 	{
 		dude.Update(wnd.kbd);		
 		dude.ClampXY();
-
-		if (!poo0.IsEaten())
+		for (int i = 0; i < size; ++i)
 		{
-			poo0.UpdateAndClamp();
-			poo0.TestCollide(dude);
+			if (!poo[i].IsEaten())
+			{
+				poo[i].UpdateAndClamp();
+				poo[i].TestCollide(dude);
+			}
 		}
-		if (!poo1.IsEaten())
+		isGameOver = true;
+		for (int i = 0; i < size; ++i)
 		{
-			poo1.UpdateAndClamp();
-			poo1.TestCollide(dude);
-		}
-		if (!poo2.IsEaten())
-		{
-			poo2.UpdateAndClamp();
-			poo2.TestCollide(dude);
-		}
-		if (!poo3.IsEaten())
-		{
-			poo3.UpdateAndClamp();
-			poo3.TestCollide(dude);
-		}
-		if (!poo4.IsEaten())
-		{
-			poo4.UpdateAndClamp();
-			poo4.TestCollide(dude);
-		}
-		if (!poo5.IsEaten())
-		{
-			poo5.UpdateAndClamp();
-			poo5.TestCollide(dude);
-		}
-		if (!poo6.IsEaten())
-		{
-			poo6.UpdateAndClamp();
-			poo6.TestCollide(dude);
-		}
-		if (!poo7.IsEaten())
-		{
-			poo7.UpdateAndClamp();
-			poo7.TestCollide(dude);
-		}
-		if (!poo8.IsEaten())
-		{
-			poo8.UpdateAndClamp();
-			poo8.TestCollide(dude);
-		}
-		if (poo0.IsEaten() &&poo1.IsEaten() &&poo2.IsEaten()&&
-			poo3.IsEaten() && poo4.IsEaten() && poo5.IsEaten()&&
-			poo6.IsEaten() && poo7.IsEaten() && poo8.IsEaten())
-		{
-			isGameOver = true;
+			isGameOver = isGameOver&& poo[i].IsEaten();
 		}
 	}
 	else
@@ -128,41 +84,12 @@ void Game::ComposeFrame()
 		}
 
 		dude.Draw(gfx);
-		if (!poo0.IsEaten())
+		for (int i = 0; i < size; ++i)
 		{
-			poo0.Draw(gfx);
-		}
-		if (!poo1.IsEaten())
-		{
-			poo1.Draw(gfx);
-		}
-		if (!poo2.IsEaten())
-		{
-			poo2.Draw(gfx);
-		}
-		if (!poo3.IsEaten())
-		{
-			poo3.Draw(gfx);
-		}
-		if (!poo4.IsEaten())
-		{
-			poo4.Draw(gfx);
-		}
-		if (!poo5.IsEaten())
-		{
-			poo5.Draw(gfx);
-		}
-		if (!poo6.IsEaten())
-		{
-			poo6.Draw(gfx);
-		}
-		if (!poo7.IsEaten())
-		{
-			poo7.Draw(gfx);
-		}
-		if (!poo8.IsEaten())
-		{
-			poo8.Draw(gfx);
+			if (!poo[i].IsEaten())
+			{
+				poo[i].Draw(gfx);
+			}
 		}
 	}
 	else

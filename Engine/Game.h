@@ -52,15 +52,8 @@ private:
 	std::uniform_int_distribution<int> distX;
 	std::uniform_int_distribution<int> distY;
 	Dude dude;
-	Poo poo0;
-	Poo poo1;
-	Poo poo2;
-	Poo poo3;
-	Poo poo4;
-	Poo poo5;
-	Poo poo6;
-	Poo poo7;
-	Poo poo8;
+	static constexpr int size = 1000;
+	Poo poo[size];
 	bool isGameStart = false;
 	bool isGameOver = false;
 	Title title;

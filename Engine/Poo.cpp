@@ -1,8 +1,20 @@
 #include "Poo.h"
 #include "Graphics.h"
+#include "assert.h"
+
+void Poo::Init(int x_1, int y_1, int vx_1, int vy_1)
+{
+	assert(!isInitilized);
+	x = x_1;
+	y = y_1;
+	vx = vx_1;
+	vy = vy_1;
+	isInitilized = true;
+}
 
 void Poo::UpdateAndClamp()
 {
+	assert(isInitilized);
 	x += vx;
 	y += vy;
 
@@ -40,6 +52,7 @@ void Poo::UpdateAndClamp()
 
 void Poo::TestCollide(const Dude& dude)
 {
+	assert(isInitilized);
 	const int box1Left = x;
 	const int box1Right = x + width - 1;
 	const int box1Up = y;
@@ -54,6 +67,7 @@ void Poo::TestCollide(const Dude& dude)
 
 void Poo::Draw(Graphics & gfx) const
 {
+	assert(isInitilized);
 	gfx.PutPixel(14 + x, 0 + y, 138, 77, 0);
 	gfx.PutPixel(7 + x, 1 + y, 138, 77, 0);
 	gfx.PutPixel(13 + x, 1 + y, 138, 77, 0);
@@ -289,5 +303,6 @@ void Poo::Draw(Graphics & gfx) const
 
 bool Poo::IsEaten() const
 {
+	assert(isInitilized);
 	return isEaten;
 }
