@@ -2,13 +2,7 @@
 
 void Cube::Draw(Graphics& gfx)
 {
-	for (int i = 0; i < width; ++i)
-	{
-		for (int j = 0; j < height; ++j)
-		{
-			gfx.PutPixel(x + i, y + j, color);
-		}
-	}
+	gfx.DrawRectColorDim(x, y, width, height, color);
 }
 
 bool Cube::IsEaten() const
@@ -29,6 +23,32 @@ void Cube::UpdateColor()
 	else
 	{
 		color = Color(255 * tempCount / (halfFreq - 1), 255 - 255 * tempCount / (halfFreq - 1), 0);
+	}
+}
+
+void Cube::UpdateColorChili()
+{
+	if (isIncreasing)
+	{
+		if (color.GetR() >= 253)
+		{
+			isIncreasing = false;
+		}
+		else
+		{
+			color = Color(color.GetR() + 2, color.GetG() + 4, color.GetB() + 4);
+		}
+	}
+	else
+	{
+		if (color.GetR() <= 127)
+		{
+			isIncreasing = true;
+		}
+		else
+		{
+			color = Color(color.GetR() - 2, color.GetG() - 4, color.GetB() - 4);
+		}
 	}
 }
 

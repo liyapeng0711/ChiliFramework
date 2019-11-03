@@ -73,7 +73,7 @@ void Game::UpdateModel()
 		{
 			isGameOver = isGameOver || poo[i].IsEaten();
 		}
-		cube.UpdateColor();
+		cube.UpdateColorChili();
 		cube.TestCollide(dude);
 		if (cube.IsEaten())
 		{

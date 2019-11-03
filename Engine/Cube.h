@@ -14,6 +14,7 @@ public:
 	void Draw(Graphics& gfx);
 	bool IsEaten() const;
 	void UpdateColor();
+	void UpdateColorChili();//from read to white
 	void TestCollide(const Dude& dude);
 	void InitXY(int x_1, int y_1);
 private:
@@ -22,7 +23,8 @@ private:
 	bool isEaten = false;
 	int count = 0;
 	int halfFreq = 100;
-	Color color;
+	bool isIncreasing = true;
+	Color color = { 127,0,0 };
 public:
 	static const int width = 20;
 	static const int height = 20;

@@ -9,15 +9,7 @@ void Counter::Draw(Graphics & gfx) const
 	}
 	for (int i = 0; i < num; ++i)
 	{
-		const int xi = x + (width + gap)*i;
-		const int yi = y;
-		for (int j = 0; j < width; ++j)
-		{
-			for (int k = 0; k < height; ++k)
-			{
-				gfx.PutPixel(xi + j, yi + k, color);
-			}
-		}
+		gfx.DrawRectColorDim(x + (width + gap)*i, y, width, height, color);
 	}
 }
 
