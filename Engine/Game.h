@@ -39,6 +39,7 @@ private:
 	/********************************/
 	/*  User Functions              */
 
+
 	/********************************/
 private:
 	MainWindow& wnd;
