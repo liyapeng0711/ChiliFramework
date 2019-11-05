@@ -62,6 +62,11 @@ public:
 	{
 		DrawRect(x, y, x + width, y + height);
 	}
+	void DrawRectColor(int x0, int y0, int x1, int y1, Color c);
+	void DrawRectDimColor(int x, int y, int width, int height, Color c)
+	{
+		DrawRectColor(x, y, x + width, y + height, c);
+	}
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

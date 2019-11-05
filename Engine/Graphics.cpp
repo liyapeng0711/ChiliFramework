@@ -240,6 +240,25 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
+void Graphics::DrawRectColor(int x0, int y0, int x1, int y1, Color c)
+{
+	if (x0 > x1)
+	{
+		Swap(x0, x1);
+	}
+	if (y0 > y1)
+	{
+		Swap(y0, y1);
+	}
+	for (int i = x0; i < x1; i++)
+	{
+		for (int j = y0; j < y1; j++)
+		{
+			PutPixel(i, j, c);
+		}
+	}
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
