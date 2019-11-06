@@ -34,58 +34,44 @@ void Snake::GetInput(const Keyboard & kbd)
 		deltaLoc = { -deltaLoc.x,-deltaLoc.y };
 	}
 	//also self move
-	++counter;
-	isRest = true;
-	if (counter == duration)
-	{
-		isRest = false;
-		counter = 0;
-	}
 }
 
 Snake::NextMoveType Snake::Move(const Location& l)
-{
-	if (!isRest)
+{	
+	NextMoveType type = EMPTY;
+	Location headTo = loc[0] + deltaLoc;
+	for (int i = 2; i <size; ++i)
 	{
-		NextMoveType type = EMPTY;
-		Location headTo = loc[0] + deltaLoc;
-		for (int i = 2; i <size; ++i)
-		{
-			if (loc[i] == headTo)
-			{
-				type = HIT;
-				break;
-			}
-		}
-		if (headTo.x < 0 || headTo.x >= Board::widthNum ||
-			headTo.y < 0 || headTo.y >= Board::heightNum)
+		if (loc[i] == headTo)
 		{
 			type = HIT;
+			break;
 		}
-		if (l == headTo)
-		{
-			type = FOOD;
-		}
-
-		//if can move, move; else, just don't move
-		if (type != HIT)
-		{
-			if (type == FOOD)
-			{
-				size++;
-			}
-			for (int i = size - 1; i > 0; --i)
-			{
-				loc[i] = loc[i - 1];
-			}
-			loc[0] = headTo;
-		}
-		return type;
 	}
-	else
+	if (headTo.x < 0 || headTo.x >= Board::widthNum ||
+		headTo.y < 0 || headTo.y >= Board::heightNum)
 	{
-		return EMPTY;
+		type = HIT;
 	}
+	if (l == headTo)
+	{
+		type = FOOD;
+	}
+
+	//if can move, move; else, just don't move
+	if (type != HIT)
+	{
+		if (type == FOOD)
+		{
+			size++;
+		}
+		for (int i = size - 1; i > 0; --i)
+		{
+			loc[i] = loc[i - 1];
+		}
+		loc[0] = headTo;
+	}
+	return type;
 }
 
 void Snake::DrawToBoard(Board & board) const

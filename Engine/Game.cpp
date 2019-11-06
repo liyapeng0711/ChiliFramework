@@ -70,21 +70,26 @@ void Game::UpdateModel()
 		break;
 	case PLAYING:
 		snake.GetInput(wnd.kbd);
-		switch (snake.Move(food.GetLoc()))
+		++counter;
+		if (counter == duration)
 		{
-		case Snake::EMPTY:
-			break;
-		case Snake::FOOD:
-			Location foodLoc;
-			do
+			switch (snake.Move(food.GetLoc()))
 			{
-				foodLoc = { xDist(rng),yDist(rng) };
-			} while (snake.TestCollision(foodLoc));
-			food.SetLoc(foodLoc);
-			break;
-		case Snake::HIT:
-			status = OVER;
-			break;
+			case Snake::EMPTY:
+				break;
+			case Snake::FOOD:
+				Location foodLoc;
+				do
+				{
+					foodLoc = { xDist(rng),yDist(rng) };
+				} while (snake.TestCollision(foodLoc));
+				food.SetLoc(foodLoc);
+				break;
+			case Snake::HIT:
+				status = OVER;
+				break;
+			}
+			counter = 0;
 		}
 		break;
 	case OVER:
@@ -97,6 +102,8 @@ void Game::ComposeFrame()
 	switch (status)
 	{
 	case TITLE:
+		sprite.DrawTitle((Graphics::ScreenWidth-SpriteCodex::titleWidth)/2,
+			(Graphics::ScreenHeight - SpriteCodex::titleHeight) / 2, gfx);
 		break;
 	case PLAYING:
 		board.ResetColor();
@@ -106,6 +113,8 @@ void Game::ComposeFrame()
 		break;
 	case OVER:
 		board.Draw(gfx);
+		sprite.DrawGameOver((Graphics::ScreenWidth - SpriteCodex::overWidth) / 2,
+			(Graphics::ScreenHeight - SpriteCodex::overHeight) / 2, gfx);
 		break;
 	}
 }

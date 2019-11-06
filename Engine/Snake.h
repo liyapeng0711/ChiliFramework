@@ -22,8 +22,5 @@ private:
 	int size = 1;
 	Location loc[maxSize];
 	Location deltaLoc;
-	bool isRest = true;
-	int counter = 0;
-	int duration = 8;
 };
 

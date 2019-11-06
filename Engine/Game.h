@@ -26,6 +26,7 @@
 #include "Snake.h"
 #include "Board.h"
 #include "Food.h"
+#include "SpriteCodex.h"
 #include <random>
 
 class Game
@@ -60,7 +61,9 @@ private:
 	Snake snake;
 	Board board;
 	Food food;
+	SpriteCodex sprite;
 	GameStatus status = TITLE;
-
+	int counter = 0;
+	int duration = 8;
 	/********************************/
 };
