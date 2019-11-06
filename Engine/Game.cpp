@@ -105,6 +105,7 @@ void Game::ComposeFrame()
 		board.Draw(gfx);
 		break;
 	case OVER:
+		board.Draw(gfx);
 		break;
 	}
 }

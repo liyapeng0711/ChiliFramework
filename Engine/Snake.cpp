@@ -29,6 +29,10 @@ void Snake::GetInput(const Keyboard & kbd)
 	{
 		deltaLoc = { 1,0 };
 	}
+	if ((loc[0] + deltaLoc) == loc[1])
+	{
+		deltaLoc = { -deltaLoc.x,-deltaLoc.y };
+	}
 	//also self move
 	++counter;
 	isRest = true;
@@ -45,13 +49,18 @@ Snake::NextMoveType Snake::Move(const Location& l)
 	{
 		NextMoveType type = EMPTY;
 		Location headTo = loc[0] + deltaLoc;
-		for (int i = size - 1; i > 0; --i)
+		for (int i = 2; i <size; ++i)
 		{
 			if (loc[i] == headTo)
 			{
 				type = HIT;
 				break;
 			}
+		}
+		if (headTo.x < 0 || headTo.x >= Board::widthNum ||
+			headTo.y < 0 || headTo.y >= Board::heightNum)
+		{
+			type = HIT;
 		}
 		if (l == headTo)
 		{

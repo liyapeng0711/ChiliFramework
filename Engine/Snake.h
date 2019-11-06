@@ -24,6 +24,6 @@ private:
 	Location deltaLoc;
 	bool isRest = true;
 	int counter = 0;
-	int duration = 10;
+	int duration = 8;
 };
 
