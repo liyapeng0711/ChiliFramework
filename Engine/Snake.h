@@ -1,6 +1,7 @@
 #pragma once
 #include "Board.h"
 #include "Keyboard.h"
+#include "Obstacle.h"
 class Snake
 {
 public:
@@ -14,9 +15,10 @@ public:
 		HIT
 	};
 	void GetInput(const Keyboard& kbd);
-	NextMoveType Move(const Location& l);
+	NextMoveType Move(const Location& l, const Obstacle& ob);
 	void DrawToBoard(Board& board)const;
 	bool TestCollision(const Location& l)const;
+	bool TestHeadAround(const Location& l)const;
 private:
 	static constexpr int maxSize = Board::widthNum*Board::heightNum;
 	static constexpr int colorSize = 5;

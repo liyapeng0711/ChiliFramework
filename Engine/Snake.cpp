@@ -44,7 +44,7 @@ void Snake::GetInput(const Keyboard & kbd)
 	//also self move
 }
 
-Snake::NextMoveType Snake::Move(const Location& l)
+Snake::NextMoveType Snake::Move(const Location& l, const Obstacle& ob)
 {	
 	NextMoveType type = EMPTY;
 	Location headTo = loc[0] + deltaLoc;
@@ -58,6 +58,10 @@ Snake::NextMoveType Snake::Move(const Location& l)
 	}
 	if (headTo.x < 0 || headTo.x >= Board::widthNum ||
 		headTo.y < 0 || headTo.y >= Board::heightNum)
+	{
+		type = HIT;
+	}
+	if (ob.TestCollision(headTo))
 	{
 		type = HIT;
 	}
@@ -102,3 +106,20 @@ bool Snake::TestCollision(const Location & l) const
 	}
 	return false;
 }
+
+bool Snake::TestHeadAround(const Location & l) const
+{
+	for (int i = loc[0].x - 1; i < loc[0].x + 2; ++i)
+	{
+		for (int j = loc[0].y - 1; j < loc[0].y + 2; ++j)
+		{
+			Location locTemp = { i,j };
+			if (l == locTemp)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+

@@ -26,6 +26,7 @@
 #include "Snake.h"
 #include "Board.h"
 #include "Food.h"
+#include "Obstacle.h"
 #include "SpriteCodex.h"
 #include <random>
 
@@ -62,10 +63,13 @@ private:
 	Board board;
 	Food food;
 	SpriteCodex sprite;
+	Obstacle obstacle;
 	GameStatus status = TITLE;
 	
-	int counter = 0;
-	int duration = 20;
+	int snakeCounter = 0;
+	int snakeDuration = 20;
+	int obstacleCounter = 0;
+	int obstacleStepNum = 10;
 
 	int wallDim = 20;
 	static constexpr Color wallColor = { 50,50,50 };

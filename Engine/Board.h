@@ -21,6 +21,7 @@ public:
 	static constexpr Color snakeHeadColor = Color{ 0, 0, 255 };
 	static constexpr Color snakeBodyColor = Color{ 0, 255, 0 };
 	static constexpr Color foodColor = Color{ 255, 0, 0 };
+	static constexpr Color obstacleColor = Color{ 0, 0, 0 };
 private:
 	int x;
 	int y;

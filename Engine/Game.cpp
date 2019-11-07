@@ -70,10 +70,22 @@ void Game::UpdateModel()
 		break;
 	case PLAYING:
 		snake.GetInput(wnd.kbd);
-		++counter;
-		if (counter == duration)
+		++snakeCounter;
+		++obstacleCounter;
+		if (obstacleCounter >= snakeDuration*obstacleStepNum)
 		{
-			switch (snake.Move(food.GetLoc()))
+			Location obstacleLoc;
+			do
+			{
+				obstacleLoc = { xDist(rng),yDist(rng) };
+			} while (snake.TestCollision(obstacleLoc)|| obstacle.TestCollision(obstacleLoc)||
+				obstacleLoc==food.GetLoc()||snake.TestHeadAround(obstacleLoc));
+			obstacle.AddOne(obstacleLoc);
+			obstacleCounter = 0;
+		}
+		if (snakeCounter >= snakeDuration)
+		{
+			switch (snake.Move(food.GetLoc(), obstacle))
 			{
 			case Snake::EMPTY:
 				break;
@@ -82,14 +94,14 @@ void Game::UpdateModel()
 				do
 				{
 					foodLoc = { xDist(rng),yDist(rng) };
-				} while (snake.TestCollision(foodLoc));
+				} while (snake.TestCollision(foodLoc) || obstacle.TestCollision(foodLoc));
 				food.SetLoc(foodLoc);
 				break;
 			case Snake::HIT:
 				status = OVER;
 				break;
 			}
-			counter = 0;
+			snakeCounter = 0;
 		}
 		break;
 	case OVER:
@@ -123,6 +135,7 @@ void Game::ComposeFrame()
 		board.ResetColor();
 		snake.DrawToBoard(board);
 		food.DrawToBoard(board);
+		obstacle.DrawToBoard(board);
 		board.Draw(gfx);
 		DrawWall();
 		break;
