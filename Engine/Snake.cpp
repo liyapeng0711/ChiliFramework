@@ -40,7 +40,7 @@ Snake::NextMoveType Snake::Move(const Location& l)
 {	
 	NextMoveType type = EMPTY;
 	Location headTo = loc[0] + deltaLoc;
-	for (int i = 2; i <size; ++i)
+	for (int i = 2; i <size-1; ++i)
 	{
 		if (loc[i] == headTo)
 		{

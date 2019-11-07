@@ -9,7 +9,6 @@ public:
 	void SetLoc(Location loc_1);
 	void DrawToBoard(Board& board);
 private:
-	Location loc;
-	
+	Location loc;	
 };
 

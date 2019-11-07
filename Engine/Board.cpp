@@ -21,7 +21,7 @@ void Board::Draw(Graphics & gfx) const
 		{
 			const int xi = x + i*width;
 			const int yi = y + j*height;
-			gfx.DrawRectDimColor(xi + 1, yi + 1, width - 1, height - 1, color[j*widthNum + i]);
+			gfx.DrawRectDimColor(xi + 1, yi + 1, width - 2, height - 2, color[j*widthNum + i]);
 		}
 	}
 }
@@ -37,4 +37,14 @@ void Board::ResetColor()
 	{
 		color[i] = emptyColor;
 	}
+}
+
+int Board::GetX() const
+{
+	return x;
+}
+
+int Board::GetY() const
+{
+	return y;
 }

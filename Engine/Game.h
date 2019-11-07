@@ -47,7 +47,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-
+	void DrawWall();
 
 	/********************************/
 private:
@@ -63,7 +63,12 @@ private:
 	Food food;
 	SpriteCodex sprite;
 	GameStatus status = TITLE;
+	
 	int counter = 0;
-	int duration = 8;
+	int duration = 20;
+
+	int wallDim = 20;
+	static constexpr Color wallColor = { 50,50,50 };
+
 	/********************************/
 };

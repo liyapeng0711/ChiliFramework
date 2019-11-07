@@ -97,6 +97,20 @@ void Game::UpdateModel()
 	}
 }
 
+void Game::DrawWall()
+{
+	const int xLeftUp = board.GetX() - wallDim;
+	const int yLeftUp = board.GetY() - wallDim;
+	const int boardWidth = Board::width*Board::widthNum;
+	const int boardHeight = Board::height*Board::heightNum;
+	const int xRightDown = board.GetX() + boardWidth + wallDim;
+	const int yRightDown = board.GetY() + boardHeight + wallDim;
+	gfx.DrawRectDimColor(xLeftUp, yLeftUp, wallDim, 2 * wallDim + boardHeight, wallColor);
+	gfx.DrawRectDimColor(xLeftUp, yLeftUp, 2 * wallDim + boardWidth, wallDim, wallColor);
+	gfx.DrawRectDimColor(xRightDown, yRightDown, -wallDim, -2 * wallDim - boardHeight, wallColor);
+	gfx.DrawRectDimColor(xRightDown, yRightDown, -2 * wallDim - boardWidth, -wallDim, wallColor);
+}
+
 void Game::ComposeFrame()
 {
 	switch (status)
@@ -110,9 +124,11 @@ void Game::ComposeFrame()
 		snake.DrawToBoard(board);
 		food.DrawToBoard(board);
 		board.Draw(gfx);
+		DrawWall();
 		break;
 	case OVER:
 		board.Draw(gfx);
+		DrawWall();
 		sprite.DrawGameOver((Graphics::ScreenWidth - SpriteCodex::overWidth) / 2,
 			(Graphics::ScreenHeight - SpriteCodex::overHeight) / 2, gfx);
 		break;
