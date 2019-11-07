@@ -1,6 +1,14 @@
 #include "Snake.h"
 
 
+Snake::Snake()
+{
+	for (int i = 0; i < colorSize; i++)
+	{
+		colorPattern[i] = Color(0, 250 - i * 50, 0);
+	}
+}
+
 Snake::~Snake()
 {
 }
@@ -79,7 +87,7 @@ void Snake::DrawToBoard(Board & board) const
 	board.SetLocColor(loc[0], Board::snakeHeadColor);
 	for (int i = 1; i < size; ++i)
 	{
-		board.SetLocColor(loc[i], Board::snakeBodyColor);
+		board.SetLocColor(loc[i], colorPattern[(i-1)%colorSize]);
 	}
 }
 
