@@ -68,8 +68,11 @@ private:
 	
 	int snakeCounter = 0;
 	int snakeDuration = 20;
+	int snakeDurationMin = 2;
+	int snakeSpeedCounter = 0;
+	int snakeSpeedDuration = 300;
 	int obstacleCounter = 0;
-	int obstacleStepNum = 10;
+	int obstacleStepNum = 15;
 
 	int wallDim = 20;
 	static constexpr Color wallColor = { 50,50,50 };

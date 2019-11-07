@@ -72,6 +72,15 @@ void Game::UpdateModel()
 		snake.GetInput(wnd.kbd);
 		++snakeCounter;
 		++obstacleCounter;
+		++snakeSpeedCounter;
+		if (snakeSpeedCounter >= snakeSpeedDuration)
+		{
+			if (--snakeDuration < snakeDurationMin)
+			{
+				snakeDuration = snakeDurationMin;
+			}			
+			snakeSpeedCounter = 0;
+		}
 		if (obstacleCounter >= snakeDuration*obstacleStepNum)
 		{
 			Location obstacleLoc;
