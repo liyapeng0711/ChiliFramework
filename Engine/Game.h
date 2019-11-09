@@ -31,6 +31,7 @@
 #include "Cube.h"
 #include "Counter.h"
 #include "TimeFramer.h"
+#include "Vec2.h"
 
 class Game
 {

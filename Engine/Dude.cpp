@@ -3,57 +3,55 @@
 
 void Dude::ClampXY()
 {
-	if (x < 0)
+	if (int(pos.x) < 0)
 	{
-		x = 0;
+		pos.x = 0.0f;
 	}
-	else if (int(x) + width - 1 >= Graphics::ScreenWidth)
+	else if (int(pos.x) + width - 1 >= Graphics::ScreenWidth)
 	{
-		x = float(Graphics::ScreenWidth - width);
-	}
-	else
-	{
-		
+		pos.x = float(Graphics::ScreenWidth - width);
 	}
 
-	if (y < 0)
+	if (int(pos.y) < 0)
 	{
-		y = 0;
+		pos.y = 0;
 	}
-	else if (int(y) + height - 1 >= Graphics::ScreenHeight)
+	else if (int(pos.y) + height - 1 >= Graphics::ScreenHeight)
 	{
-		y = float(Graphics::ScreenHeight - height);
-	}
-	else
-	{
-		
+		pos.y = float(Graphics::ScreenHeight - height);
 	}
 }
 
-void Dude::Update(const Keyboard & kbd, float dt)
+void Dude::Update(const Keyboard & kbd, const Mouse& mouse, float dt)
 {
+	Vec2 dir(0.0f, 0.0f);
+	Vec2 mouseV(float(mouse.GetPosX()), float(mouse.GetPosY()));
+	dir = mouseV - pos;
 	if (kbd.KeyIsPressed(VK_UP))
 	{
-		y -= speed*dt;
+		dir.y -= 1;
 	}
 	if (kbd.KeyIsPressed(VK_DOWN))
 	{
-		y += speed*dt;
+		dir.y += 1;
 	}
 	if (kbd.KeyIsPressed(VK_LEFT))
 	{
-		x -= speed*dt;
+		dir.x -= 1;
 	}
 	if (kbd.KeyIsPressed(VK_RIGHT))
 	{
-		x += speed*dt;
+		dir.x += 1;
 	}
+
+	Vec2 dist = dir.GetNormalized()*speed*dt;
+	pos += dist;
 }
 
 void Dude::Draw(Graphics& gfx)const
 {
-	const int x = int(Dude::x);
-	const int y = int(Dude::y);
+	const int x = int(Dude::pos.x);
+	const int y = int(Dude::pos.y);
 	gfx.PutPixel(7 + x, 0 + y, 0, 0, 0);
 	gfx.PutPixel(8 + x, 0 + y, 0, 0, 0);
 	gfx.PutPixel(9 + x, 0 + y, 0, 0, 0);
@@ -373,27 +371,22 @@ void Dude::Draw(Graphics& gfx)const
 
 }
 
-bool Dude::IsCollide(float x2, float y2, int width2, int height2)
+bool Dude::IsCollide(Vec2 vec, int width2, int height2)
 {
-	const float box1Left = x;
-	const float box1Right = x + float(width - 1);
-	const float box1Up = y;
-	const float box1Down = y + float(height - 1);
-	const float box2Left = x2;
-	const float box2Right = x2 + float(width2 - 1);
-	const float box2Up = y2;
-	const float box2Down = y2 + float(height2 - 1);
+	const float box1Left = pos.x;
+	const float box1Right = pos.x + float(width - 1);
+	const float box1Up = pos.y;
+	const float box1Down = pos.y + float(height - 1);
+	const float box2Left = vec.x;
+	const float box2Right = vec.x + float(width2 - 1);
+	const float box2Up = vec.y;
+	const float box2Down = vec.y + float(height2 - 1);
 	return box1Left <= box2Right && box1Right >= box2Left &&
 		box1Up <= box2Down && box1Down >= box2Up;
 }
 
-
-float Dude::GetX() const
+Vec2 Dude::GetPos() const
 {
-	return x;
+	return pos;
 }
 
-float Dude::GetY() const
-{
-	return y;
-}

@@ -2,50 +2,40 @@
 #include "Graphics.h"
 #include "assert.h"
 
-void Poo::Init(float x_1, float y_1, float vx_1, float vy_1)
+void Poo::Init(Vec2 pos_1, Vec2 vel_1)
 {
 	assert(!isInitilized);
-	x = x_1;
-	y = y_1;
-	vx = vx_1;
-	vy = vy_1;
+	pos = pos_1;
+	vel = vel_1;
 	isInitilized = true;
 }
+
 
 void Poo::UpdateAndClamp(float dt)
 {
 	assert(isInitilized);
-	x += vx*dt;
-	y += vy*dt;
+	pos += vel*dt;
 
-	if (x < 0)
+	if (int(pos.x) < 0)
 	{
-		x = 0;
-		vx = -vx;
+		pos.x = 0.0f;
+		vel.x = -vel.x;
 	}
-	else if (int(x) + width - 1 >= Graphics::ScreenWidth)
+	else if (int(pos.x) + width - 1 >= Graphics::ScreenWidth)
 	{
-		x = float(Graphics::ScreenWidth - width);
-		vx = -vx;
-	}
-	else
-	{
-
+		pos.x = float(Graphics::ScreenWidth - width);
+		vel.x = -vel.x;
 	}
 
-	if (y < 0)
+	if (int(pos.y) < 0)
 	{
-		y = 0;
-		vy = -vy;
+		pos.y = 0.0f;
+		vel.y = -vel.y;
 	}
-	else if (int(y) + height - 1 >= Graphics::ScreenHeight)
+	else if (int(pos.y) + height - 1 >= Graphics::ScreenHeight)
 	{
-		y = float(Graphics::ScreenHeight - height);
-		vy = -vy;
-	}
-	else
-	{
-		
+		pos.y = float(Graphics::ScreenHeight - height);
+		vel.y = -vel.y;
 	}
 
 }
@@ -53,14 +43,14 @@ void Poo::UpdateAndClamp(float dt)
 void Poo::TestCollide(const Dude& dude)
 {
 	assert(isInitilized);
-	const float box1Left = x;
-	const float box1Right = x + float(width - 1);
-	const float box1Up = y;
-	const float box1Down = y + float(height - 1);
-	const float box2Left = dude.GetX();
-	const float box2Right = dude.GetX() + float(Dude::width - 1);
-	const float box2Up = dude.GetY();
-	const float box2Down = dude.GetY() + float(Dude::height - 1);
+	const float box1Left = pos.x;
+	const float box1Right = pos.x + float(width - 1);
+	const float box1Up = pos.y;
+	const float box1Down = pos.y + float(height - 1);
+	const float box2Left = dude.GetPos().x;
+	const float box2Right = dude.GetPos().x + float(Dude::width - 1);
+	const float box2Up = dude.GetPos().y;
+	const float box2Down = dude.GetPos().y + float(Dude::height - 1);
 	isEaten= box1Left <= box2Right && box1Right >= box2Left &&
 		box1Up <= box2Down && box1Down >= box2Up;
 }
@@ -68,8 +58,8 @@ void Poo::TestCollide(const Dude& dude)
 void Poo::Draw(Graphics & gfx) const
 {
 	assert(isInitilized);
-	int x = int(Poo::x);
-	int y = int(Poo::y);
+	int x = int(Poo::pos.x);
+	int y = int(Poo::pos.y);
 	gfx.PutPixel(14 + x, 0 + y, 138, 77, 0);
 	gfx.PutPixel(7 + x, 1 + y, 138, 77, 0);
 	gfx.PutPixel(13 + x, 1 + y, 138, 77, 0);

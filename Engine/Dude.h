@@ -1,25 +1,24 @@
 #pragma once
 #include"Graphics.h"
 #include"Keyboard.h"
+#include"Mouse.h"
+#include"Vec2.h"
 
 class Dude
 {
 public:
-	Dude(float x_1, float y_1)
+	Dude(Vec2 pos_1)
 	{
-		x = x_1;
-		y = y_1;
+		pos = pos_1;
 	}
 	void ClampXY();
-	void Update(const Keyboard& kbd, float dt);
+	void Update(const Keyboard& kbd, const Mouse& mouse, float dt);
 	void Draw(Graphics& gfx)const;
-	bool IsCollide(float x2, float y2, int width2, int height2);
-	float GetX()const;
-	float GetY()const;
+	bool IsCollide(Vec2 vec, int width2, int height2);
+	Vec2 GetPos()const;
 private:
-	float x;
-	float y;
-	float speed = 3*60;
+	Vec2 pos;
+	float speed = 240.0f;	//60 is the frequency of drawing
 public:
 	static constexpr int width = 20;
 	static constexpr int height = 20;

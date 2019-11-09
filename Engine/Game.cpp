@@ -26,23 +26,23 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	rng(rd()),
-	distX(0, gfx.ScreenWidth - Poo::width),
-	distY(0, gfx.ScreenHeight - Poo::height),
-	dude(300, 400),
-	cube(distX(rng),distY(rng)),
+	distX(0.0f, float(gfx.ScreenWidth - Poo::width)),
+	distY(0.0f, float(gfx.ScreenHeight - Poo::height)),
+	dude(Vec2(distX(rng), distY(rng))),
+	cube(Vec2(distX(rng),distY(rng))),
 	counter(50,20)
 {
-	std::uniform_real_distribution<float> distV(-3*60, 3*60);
+	std::uniform_real_distribution<float> distV(-180.f, 180.f);
 	for (int i = 0; i < size; ++i)
 	{
-		float vx = 0;
-		float vy = 0;
-		while (vx == 0 && vy == 0)
+		float vx = 0.0f;
+		float vy = 0.0f;
+		while (vx == 0.0f && vy == 0.0f)
 		{
 			vx = distV(rng);
 			vy = distV(rng);
 		}
-		poo[i].Init(distX(rng), distY(rng), vx, vy);
+		poo[i].Init(Vec2(distX(rng), distY(rng)), Vec2(vx, vy));
 	}
 }
 
@@ -59,7 +59,7 @@ void Game::UpdateModel()
 	float dt = timeFramer.Mark();
 	if (isGameStart&&!isGameOver)
 	{
-		dude.Update(wnd.kbd, dt);
+		dude.Update(wnd.kbd, wnd.mouse, dt);
 		dude.ClampXY();
 		for (int i = 0; i < size; ++i)
 		{
@@ -79,7 +79,7 @@ void Game::UpdateModel()
 		if (cube.IsEaten())
 		{
 			counter.AddOne();
-			cube.InitXY(distX(rng), distY(rng));
+			cube.InitXY(Vec2(distX(rng), distY(rng)));
 		}
 	}
 	else
