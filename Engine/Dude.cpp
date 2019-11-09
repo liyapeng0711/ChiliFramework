@@ -7,9 +7,9 @@ void Dude::ClampXY()
 	{
 		x = 0;
 	}
-	else if (x + width - 1 >= Graphics::ScreenWidth)
+	else if (int(x) + width - 1 >= Graphics::ScreenWidth)
 	{
-		x = Graphics::ScreenWidth - width;
+		x = float(Graphics::ScreenWidth - width);
 	}
 	else
 	{
@@ -20,9 +20,9 @@ void Dude::ClampXY()
 	{
 		y = 0;
 	}
-	else if (y + height - 1 >= Graphics::ScreenHeight)
+	else if (int(y) + height - 1 >= Graphics::ScreenHeight)
 	{
-		y = Graphics::ScreenHeight - height;
+		y = float(Graphics::ScreenHeight - height);
 	}
 	else
 	{
@@ -52,6 +52,8 @@ void Dude::Update(const Keyboard & kbd)
 
 void Dude::Draw(Graphics& gfx)const
 {
+	const int x = int(Dude::x);
+	const int y = int(Dude::y);
 	gfx.PutPixel(7 + x, 0 + y, 0, 0, 0);
 	gfx.PutPixel(8 + x, 0 + y, 0, 0, 0);
 	gfx.PutPixel(9 + x, 0 + y, 0, 0, 0);
@@ -371,36 +373,27 @@ void Dude::Draw(Graphics& gfx)const
 
 }
 
-bool Dude::IsCollide(int x2, int y2, int width2, int height2)
+bool Dude::IsCollide(float x2, float y2, int width2, int height2)
 {
-	const int box1Left = x;
-	const int box1Right = x + width - 1;
-	const int box1Up = y;
-	const int box1Down = y + height - 1;
-	const int box2Left = x2;
-	const int box2Right = x2 + width2 - 1;
-	const int box2Up = y2;
-	const int box2Down = y2 + height2 - 1;
+	const float box1Left = x;
+	const float box1Right = x + float(width - 1);
+	const float box1Up = y;
+	const float box1Down = y + float(height - 1);
+	const float box2Left = x2;
+	const float box2Right = x2 + float(width2 - 1);
+	const float box2Up = y2;
+	const float box2Down = y2 + float(height2 - 1);
 	return box1Left <= box2Right && box1Right >= box2Left &&
 		box1Up <= box2Down && box1Down >= box2Up;
 }
 
-void Dude::AddX(int a)
-{
-	x += a;
-}
 
-void Dude::AddY(int a)
-{
-	y += a;
-}
-
-int Dude::GetX() const
+float Dude::GetX() const
 {
 	return x;
 }
 
-int Dude::GetY() const
+float Dude::GetY() const
 {
 	return y;
 }

@@ -2,7 +2,7 @@
 #include "Graphics.h"
 #include "assert.h"
 
-void Poo::Init(int x_1, int y_1, int vx_1, int vy_1)
+void Poo::Init(float x_1, float y_1, float vx_1, float vy_1)
 {
 	assert(!isInitilized);
 	x = x_1;
@@ -23,9 +23,9 @@ void Poo::UpdateAndClamp()
 		x = 0;
 		vx = -vx;
 	}
-	else if (x + width - 1 >= Graphics::ScreenWidth)
+	else if (int(x) + width - 1 >= Graphics::ScreenWidth)
 	{
-		x = Graphics::ScreenWidth - width;
+		x = float(Graphics::ScreenWidth - width);
 		vx = -vx;
 	}
 	else
@@ -38,9 +38,9 @@ void Poo::UpdateAndClamp()
 		y = 0;
 		vy = -vy;
 	}
-	else if (y + height - 1 >= Graphics::ScreenHeight)
+	else if (int(y) + height - 1 >= Graphics::ScreenHeight)
 	{
-		y = Graphics::ScreenHeight - height;
+		y = float(Graphics::ScreenHeight - height);
 		vy = -vy;
 	}
 	else
@@ -53,14 +53,14 @@ void Poo::UpdateAndClamp()
 void Poo::TestCollide(const Dude& dude)
 {
 	assert(isInitilized);
-	const int box1Left = x;
-	const int box1Right = x + width - 1;
-	const int box1Up = y;
-	const int box1Down = y + height - 1;
-	const int box2Left = dude.GetX();
-	const int box2Right = dude.GetX() + Dude::width - 1;
-	const int box2Up = dude.GetY();
-	const int box2Down = dude.GetY() + Dude::height - 1;
+	const float box1Left = x;
+	const float box1Right = x + float(width - 1);
+	const float box1Up = y;
+	const float box1Down = y + float(height - 1);
+	const float box2Left = dude.GetX();
+	const float box2Right = dude.GetX() + float(Dude::width - 1);
+	const float box2Up = dude.GetY();
+	const float box2Down = dude.GetY() + float(Dude::height - 1);
 	isEaten= box1Left <= box2Right && box1Right >= box2Left &&
 		box1Up <= box2Down && box1Down >= box2Up;
 }
@@ -68,6 +68,8 @@ void Poo::TestCollide(const Dude& dude)
 void Poo::Draw(Graphics & gfx) const
 {
 	assert(isInitilized);
+	int x = int(Poo::x);
+	int y = int(Poo::y);
 	gfx.PutPixel(14 + x, 0 + y, 138, 77, 0);
 	gfx.PutPixel(7 + x, 1 + y, 138, 77, 0);
 	gfx.PutPixel(13 + x, 1 + y, 138, 77, 0);

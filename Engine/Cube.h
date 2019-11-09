@@ -6,7 +6,7 @@
 class Cube
 {
 public:
-	Cube(int x_1, int y_1)
+	Cube(float x_1, float y_1)
 	{
 		x = x_1;
 		y = y_1;
@@ -16,10 +16,10 @@ public:
 	void UpdateColor();
 	void UpdateColorChili();//from read to white
 	void TestCollide(const Dude& dude);
-	void InitXY(int x_1, int y_1);
+	void InitXY(float x_1, float y_1);
 private:
-	int x;
-	int y;
+	float x;
+	float y;
 	bool isEaten = false;
 	int count = 0;
 	int halfFreq = 100;

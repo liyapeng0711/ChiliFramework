@@ -32,11 +32,11 @@ Game::Game(MainWindow& wnd)
 	cube(distX(rng),distY(rng)),
 	counter(50,20)
 {
-	std::uniform_int_distribution<int> distV(-1, 1);
+	std::uniform_real_distribution<float> distV(-3, 3);
 	for (int i = 0; i < size; ++i)
 	{
-		int vx = 0;
-		int vy = 0;
+		float vx = 0;
+		float vy = 0;
 		while (vx == 0 && vy == 0)
 		{
 			vx = distV(rng);

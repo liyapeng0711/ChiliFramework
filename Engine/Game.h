@@ -51,10 +51,10 @@ private:
 	/*  User Variables              */
 	std::random_device rd;
 	std::mt19937_64 rng;
-	std::uniform_int_distribution<int> distX;
-	std::uniform_int_distribution<int> distY;
+	std::uniform_real_distribution<float> distX;
+	std::uniform_real_distribution<float> distY;
 	Dude dude;
-	static constexpr int size = 20;
+	static constexpr int size = 10;
 	Poo poo[size];
 	bool isGameStart = false;
 	bool isGameOver = false;

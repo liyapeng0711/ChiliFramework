@@ -4,16 +4,16 @@
 class Poo
 {
 public:
-	void Init(int x_1, int y_1, int vx_1, int vy_1);
+	void Init(float x_1, float y_1, float vx_1, float vy_1);
 	void UpdateAndClamp();
 	void TestCollide(const Dude& dude);
 	void Draw(Graphics& gfx)const;
 	bool IsEaten()const;
 private:
-	int x;
-	int y;
-	int vx;
-	int vy;
+	float x;
+	float y;
+	float vx;
+	float vy;
 	bool isEaten = false;
 	bool isInitilized = false;	//for robust and safety check
 public:
