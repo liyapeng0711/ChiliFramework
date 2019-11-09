@@ -153,6 +153,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="TimeFramer.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Counter.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Poo.cpp" />
     <ClCompile Include="TimeFramer.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FramebufferPS.hlsl">
