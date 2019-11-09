@@ -26,7 +26,8 @@ void Dude::Update(const Keyboard & kbd, const Mouse& mouse, float dt)
 {
 	Vec2 dir(0.0f, 0.0f);
 	Vec2 mouseV(float(mouse.GetPosX()), float(mouse.GetPosY()));
-	dir = mouseV - pos;
+	Vec2 center(pos.x + float(width) / 2.0f, pos.y + float(height) / 2.0f);
+	dir = mouseV - center;
 	if (kbd.KeyIsPressed(VK_UP))
 	{
 		dir.y -= 1;
@@ -45,7 +46,10 @@ void Dude::Update(const Keyboard & kbd, const Mouse& mouse, float dt)
 	}
 
 	Vec2 dist = dir.GetNormalized()*speed*dt;
-	pos += dist;
+	if (dir.GetLengthSq() > 3.0f)
+	{
+		pos += dist;
+	}
 }
 
 void Dude::Draw(Graphics& gfx)const
