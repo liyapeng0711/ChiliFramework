@@ -110,4 +110,17 @@ void Game::ComposeFrame()
 	{
 		title.Draw(gfx, 325, 212);
 	}
+	const int radius = 100;
+	const int posX = 200;
+	const int posY = 200;
+	for (int i = -radius; i <= radius; ++i)
+	{
+		for (int j = -radius; j <= radius; ++j)
+		{
+			if ((i*i + j*j) <= radius*radius)
+			{
+				gfx.PutPixel(posX + i, posY + j, Colors::Blue);
+			}
+		}
+	}
 }
