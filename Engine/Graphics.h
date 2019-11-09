@@ -67,6 +67,7 @@ public:
 	{
 		DrawRectColor(x, y, x + width, y + height, c);
 	}
+	void DrawCircle(int x, int y, int radius, Color c);
 
 	~Graphics();
 private:

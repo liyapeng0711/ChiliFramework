@@ -11,7 +11,7 @@ public:
 		y = y_1;
 	}
 	void ClampXY();
-	void Update(const Keyboard& kbd);
+	void Update(const Keyboard& kbd, float dt);
 	void Draw(Graphics& gfx)const;
 	bool IsCollide(float x2, float y2, int width2, int height2);
 	float GetX()const;
@@ -19,6 +19,7 @@ public:
 private:
 	float x;
 	float y;
+	float speed = 3*60;
 public:
 	static constexpr int width = 20;
 	static constexpr int height = 20;

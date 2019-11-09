@@ -259,6 +259,20 @@ void Graphics::DrawRectColor(int x0, int y0, int x1, int y1, Color c)
 	}
 }
 
+void Graphics::DrawCircle(int x, int y, int radius, Color c)
+{
+	for (int i = -radius; i <= radius; ++i)
+	{
+		for (int j = -radius; j <= radius; ++j)
+		{
+			if ((i*i + j*j) <= radius*radius)
+			{
+				PutPixel(x + i, y + j, c);
+			}
+		}
+	}
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)

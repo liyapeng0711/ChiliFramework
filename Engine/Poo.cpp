@@ -12,11 +12,11 @@ void Poo::Init(float x_1, float y_1, float vx_1, float vy_1)
 	isInitilized = true;
 }
 
-void Poo::UpdateAndClamp()
+void Poo::UpdateAndClamp(float dt)
 {
 	assert(isInitilized);
-	x += vx;
-	y += vy;
+	x += vx*dt;
+	y += vy*dt;
 
 	if (x < 0)
 	{

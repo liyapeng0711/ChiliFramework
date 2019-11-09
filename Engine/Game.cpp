@@ -32,7 +32,7 @@ Game::Game(MainWindow& wnd)
 	cube(distX(rng),distY(rng)),
 	counter(50,20)
 {
-	std::uniform_real_distribution<float> distV(-3, 3);
+	std::uniform_real_distribution<float> distV(-3*60, 3*60);
 	for (int i = 0; i < size; ++i)
 	{
 		float vx = 0;
@@ -56,15 +56,16 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	float dt = timeFramer.Mark();
 	if (isGameStart&&!isGameOver)
 	{
-		dude.Update(wnd.kbd);
+		dude.Update(wnd.kbd, dt);
 		dude.ClampXY();
 		for (int i = 0; i < size; ++i)
 		{
 			if (!poo[i].IsEaten())
 			{
-				poo[i].UpdateAndClamp();
+				poo[i].UpdateAndClamp(dt);
 				poo[i].TestCollide(dude);
 			}
 		}
@@ -109,18 +110,5 @@ void Game::ComposeFrame()
 	else
 	{
 		title.Draw(gfx, 325, 212);
-	}
-	const int radius = 100;
-	const int posX = 200;
-	const int posY = 200;
-	for (int i = -radius; i <= radius; ++i)
-	{
-		for (int j = -radius; j <= radius; ++j)
-		{
-			if ((i*i + j*j) <= radius*radius)
-			{
-				gfx.PutPixel(posX + i, posY + j, Colors::Blue);
-			}
-		}
 	}
 }

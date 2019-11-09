@@ -30,23 +30,23 @@ void Dude::ClampXY()
 	}
 }
 
-void Dude::Update(const Keyboard & kbd)
+void Dude::Update(const Keyboard & kbd, float dt)
 {
 	if (kbd.KeyIsPressed(VK_UP))
 	{
-		y -= 3;
+		y -= speed*dt;
 	}
 	if (kbd.KeyIsPressed(VK_DOWN))
 	{
-		y += 3;
+		y += speed*dt;
 	}
 	if (kbd.KeyIsPressed(VK_LEFT))
 	{
-		x -= 3;
+		x -= speed*dt;
 	}
 	if (kbd.KeyIsPressed(VK_RIGHT))
 	{
-		x += 3;
+		x += speed*dt;
 	}
 }
 

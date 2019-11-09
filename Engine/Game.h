@@ -30,6 +30,7 @@
 #include <random>
 #include "Cube.h"
 #include "Counter.h"
+#include "TimeFramer.h"
 
 class Game
 {
@@ -62,6 +63,7 @@ private:
 	GameOver gameover;
 	Cube cube;
 	Counter counter;
+	TimeFramer timeFramer;
 
 	/********************************/
 };
