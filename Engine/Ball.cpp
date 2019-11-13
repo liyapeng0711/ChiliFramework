@@ -7,6 +7,3 @@ Ball::Ball()
 }
 
 
-Ball::~Ball()
-{
-}
