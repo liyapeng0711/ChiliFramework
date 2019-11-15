@@ -13,6 +13,11 @@ Rect::Rect(Vec2 leftUp, float width, float height)
 {
 }
 
+Rect Rect::RectCenter(Vec2 center, float halfWidth, float halfHeight)
+{
+	return Rect(center-Vec2(halfWidth, halfHeight), halfWidth*2.0f, halfHeight*2.0f);
+}
+
 
 bool Rect::TestCollision(const Rect & rect) const
 {
@@ -28,4 +33,14 @@ float Rect::GetWidth() const
 float Rect::GetHeight() const
 {
 	return (rightDown - leftUp).y;
+}
+
+Vec2 Rect::GetLeftUp() const
+{
+	return leftUp;
+}
+
+Vec2 Rect::GetRightDown() const
+{
+	return rightDown;
 }

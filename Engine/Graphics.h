@@ -23,6 +23,8 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "Vec2.h"
+#include "Rect.h"
 
 class Graphics
 {
@@ -62,6 +64,7 @@ public:
 	{
 		DrawRect(x, y, x + width, y + height);
 	}
+	void DrawRect(const Rect& rect);
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

@@ -240,6 +240,12 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
+void Graphics::DrawRect(const Rect & rect)
+{
+	DrawRect(int(rect.GetLeftUp().x), int(rect.GetLeftUp().y),
+		int(rect.GetRightDown().x), int(rect.GetRightDown().y));
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
