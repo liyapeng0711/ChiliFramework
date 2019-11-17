@@ -8,6 +8,7 @@ public:
 	Rect(Vec2 leftUp, float width, float height);
 	static Rect RectCenter(Vec2 center, float halfWidth, float halfHeight);
 	bool TestCollision(const Rect& rect) const;
+	bool TestInside(const Vec2& vec)const;
 	float GetWidth()const;
 	float GetHeight()const;
 	Vec2 GetLeftUp()const;

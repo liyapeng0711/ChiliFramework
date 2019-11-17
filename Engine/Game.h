@@ -23,6 +23,10 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "FrameTimer.h"
+#include "Rect.h"
+#include "Ball.h"
+#include "Vec2.h"
 
 class Game
 {
@@ -43,7 +47,9 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-
-
+	FrameTimer timer;
+	Ball ball;
+	Rect wall;
+	Rect brick;
 	/********************************/
 };

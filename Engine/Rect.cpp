@@ -25,6 +25,12 @@ bool Rect::TestCollision(const Rect & rect) const
 		&& rightDown.x >= rect.leftUp.x && rightDown.y >= rect.leftUp.y;
 }
 
+bool Rect::TestInside(const Vec2 & vec) const
+{
+	return vec.x >= leftUp.x && vec.x <= rightDown.x
+		&& vec.y >= leftUp.y && vec.y <= rightDown.y;
+}
+
 float Rect::GetWidth() const
 {
 	return (rightDown - leftUp).x;

@@ -25,7 +25,10 @@
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
-	gfx( wnd )
+	gfx( wnd ),
+	ball(Vec2(400.0f,400.0f),Vec2(-200.0f,-200.0f)),
+	wall(Vec2(0.0f,0.0f),Vec2(float(Graphics::ScreenWidth),float(Graphics::ScreenHeight))),
+	brick(Vec2(100.0f, 100.0f),Vec2(300.0f,300.0f))
 {
 
 }
@@ -40,10 +43,14 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-
+	float dt = timer.Mark();
+	ball.Update(dt);
+	ball.ReboundInRect(wall);
+	ball.ReboundOutRect(brick);
 }
 
 void Game::ComposeFrame()
 {
-
+	gfx.DrawRect(brick, Colors::Blue);
+	ball.Draw(gfx);
 }

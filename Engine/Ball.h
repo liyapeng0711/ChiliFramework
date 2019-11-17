@@ -1,6 +1,7 @@
 #pragma once
 #include "Rect.h"
 #include "SpriteCodex.h"
+#include "Rect.h"
 
 class Ball
 {
@@ -9,6 +10,8 @@ public:
 	Rect GetRect()const;
 	void Draw(Graphics& gfx)const;
 	void Update(float dt);
+	void ReboundInRect(const Rect& rect);
+	bool ReboundOutRect(const Rect& rect);
 	void ReboundX();
 	void ReboundY();
 private:

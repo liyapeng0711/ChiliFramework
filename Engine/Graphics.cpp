@@ -240,10 +240,10 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
-void Graphics::DrawRect(const Rect & rect)
+void Graphics::DrawRect(const Rect & rect, Color c)
 {
 	DrawRect(int(rect.GetLeftUp().x), int(rect.GetLeftUp().y),
-		int(rect.GetRightDown().x), int(rect.GetRightDown().y));
+		int(rect.GetRightDown().x), int(rect.GetRightDown().y), c);
 }
 
 Graphics::~Graphics()
@@ -331,7 +331,7 @@ void Graphics::Swap(int & a, int & b) const
 	b = temp;
 }
 
-void Graphics::DrawRect(int x0, int y0, int x1, int y1)
+void Graphics::DrawRect(int x0, int y0, int x1, int y1, Color c)
 {
 	if (x0 > x1)
 	{
@@ -345,7 +345,7 @@ void Graphics::DrawRect(int x0, int y0, int x1, int y1)
 	{
 		for (int j = y0; j < y1; j++)
 		{
-			PutPixel(i, j, 255, 255, 255);
+			PutPixel(i, j, c);
 		}
 	}
 }
