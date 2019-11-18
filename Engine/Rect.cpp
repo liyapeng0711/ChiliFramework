@@ -50,3 +50,24 @@ Vec2 Rect::GetRightDown() const
 {
 	return rightDown;
 }
+
+void Rect::SetLeft(float left)
+{
+	leftUp.x = left;
+}
+
+void Rect::SetRight(float right)
+{
+	rightDown.x = right;
+}
+
+void Rect::SetUp(float up)
+{
+	leftUp.y = up;
+}
+
+void Rect::SetDown(float down)
+{
+	rightDown.y = down;
+}
+

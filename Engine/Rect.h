@@ -13,6 +13,10 @@ public:
 	float GetHeight()const;
 	Vec2 GetLeftUp()const;
 	Vec2 GetRightDown()const;
+	void SetLeft(float left);
+	void SetRight(float right);
+	void SetUp(float up);
+	void SetDown(float down);
 private:
 	Vec2 leftUp;
 	Vec2 rightDown;
