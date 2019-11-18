@@ -2,11 +2,32 @@
 
 
 
-Brick::Brick()
+Brick::Brick(Rect rect, Color color)
+	:
+	rect(rect),
+	color(color)
 {
 }
 
-
-Brick::~Brick()
+void Brick::Draw(Graphics & gfx) const
 {
+	if (!isDestroyed)
+	{
+		gfx.DrawRect(rect, color);
+	}
+}
+
+Rect Brick::GetRect() const
+{
+	return rect;
+}
+
+void Brick::Destroy()
+{
+	isDestroyed = true;
+}
+
+bool Brick::IsDestroyed() const
+{
+	return isDestroyed;
 }
