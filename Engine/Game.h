@@ -27,7 +27,8 @@
 #include "Rect.h"
 #include "Ball.h"
 #include "Vec2.h"
-
+#include "Brick.h"
+#include "Padder.h"
 class Game
 {
 public:
@@ -50,6 +51,7 @@ private:
 	FrameTimer timer;
 	Ball ball;
 	Rect wall;
-	Rect brick;
+	Brick brick;
+	Padder padder;
 	/********************************/
 };

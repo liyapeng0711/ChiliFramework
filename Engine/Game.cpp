@@ -28,7 +28,8 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	ball(Vec2(400.0f,400.0f),Vec2(-200.0f,-200.0f)),
 	wall(Vec2(0.0f,0.0f),Vec2(float(Graphics::ScreenWidth),float(Graphics::ScreenHeight))),
-	brick(Vec2(100.0f, 100.0f),Vec2(300.0f,300.0f))
+	brick(Rect(Vec2(100.0f,100.0f),100.0f,40.0f),Colors::Blue),
+	padder(Rect(Vec2(400.0f,400.0f),100.0f,40.0f))
 {
 
 }
@@ -45,12 +46,20 @@ void Game::UpdateModel()
 {
 	float dt = timer.Mark();
 	ball.Update(dt);
+	padder.Update(wnd.kbd, dt);
+
 	ball.ReboundInRect(wall);
-	ball.ReboundOutRect(brick);
+	if (!brick.IsDestroyed()&&ball.ReboundOutRect(brick.GetRect()))
+	{
+		brick.Destroy();
+	}
+	ball.ReboundOutRect(padder.GetRect());
+	padder.LimitInRect(wall);
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawRect(brick, Colors::Blue);
+	brick.Draw(gfx);
+	padder.Draw(gfx);
 	ball.Draw(gfx);
 }
