@@ -22,16 +22,25 @@
 #include "Game.h"
 #include <random>
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
-	ball(Vec2(400.0f,400.0f),Vec2(-200.0f,-200.0f)),
-	wall(Vec2(0.0f,0.0f),Vec2(float(Graphics::ScreenWidth),float(Graphics::ScreenHeight))),
-	brick(Rect(Vec2(100.0f,100.0f),100.0f,40.0f),Colors::Blue),
-	padder(Rect(Vec2(400.0f,400.0f),100.0f,40.0f))
+	wnd(wnd),
+	gfx(wnd),
+	originWall((float(Graphics::ScreenWidth) - widthRequired) / 2.0f, (float(Graphics::ScreenHeight) - heightRequired) / 2.0f),
+	ball(originWall + Vec2(widthRequired / 2.0f, heightRequired / 2.0f), Vec2(-100.0f, -100.0f)),
+	wall(originWall, widthRequired, heightRequired),
+	padder(Rect(originWall+ Vec2(widthRequired/2.0f-padderWidth/2.0f, heightRequired - originPadderBottom - padderHeight), padderWidth, padderHeight))
 {
-
+	const Vec2 ori = originWall + Vec2(originBrickWidth, originBrickHeight);
+	Color brickColor[4] = { Colors::Blue, Colors::Cyan, Colors::Magenta,Colors::Red };
+	for (int i = 0; i < brickWidthNum; ++i)
+	{
+		for (int j = 0; j < brickHeightNum; ++j)
+		{
+			const Vec2 leftUp = ori + Vec2(float(i)*brickWidth + float(i - 1)*brickBetween, float(j)*brickHeight + float(j - 1)*brickBetween);
+			bricks[i + j*brickWidthNum] = Brick(Rect(leftUp, brickWidth, brickHeight), brickColor[j % 4]);
+		}
+	}
 }
 
 void Game::Go()
@@ -49,17 +58,27 @@ void Game::UpdateModel()
 	padder.Update(wnd.kbd, dt);
 
 	ball.ReboundInRect(wall);
-	if (!brick.IsDestroyed()&&ball.ReboundOutRect(brick.GetRect()))
+	for (auto& i : bricks)
 	{
-		brick.Destroy();
+		if (!i.IsDestroyed() && ball.ReboundOutRect(i.GetRect()))
+		{
+			i.Destroy();
+		}
 	}
-	ball.ReboundOutRect(padder.GetRect());
+	ball.ReboundOutRect(padder.GetRect(),padder.GetSpeed());
 	padder.LimitInRect(wall);
 }
 
 void Game::ComposeFrame()
 {
-	brick.Draw(gfx);
+	gfx.DrawRect(wall, Colors::Gray);
+	for (auto& i : bricks)
+	{
+		if (!i.IsDestroyed())
+		{
+			i.Draw(gfx);
+		}
+	}
 	padder.Draw(gfx);
 	ball.Draw(gfx);
 }

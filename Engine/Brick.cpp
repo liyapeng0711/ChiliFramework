@@ -10,11 +10,8 @@ Brick::Brick(Rect rect, Color color)
 }
 
 void Brick::Draw(Graphics & gfx) const
-{
-	if (!isDestroyed)
-	{
-		gfx.DrawRect(rect, color);
-	}
+{	
+	gfx.DrawRect(rect, color);
 }
 
 Rect Brick::GetRect() const

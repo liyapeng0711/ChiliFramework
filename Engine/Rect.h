@@ -17,6 +17,7 @@ public:
 	void SetRight(float right);
 	void SetUp(float up);
 	void SetDown(float down);
+	void Move(Vec2 vec);
 private:
 	Vec2 leftUp;
 	Vec2 rightDown;

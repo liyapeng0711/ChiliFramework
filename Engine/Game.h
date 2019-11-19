@@ -48,10 +48,27 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	float brickWidth = 50.0f;
+	float brickHeight = 25.0f;
+	float brickBetween = 2.0f;
+	static constexpr int brickWidthNum = 10;
+	static constexpr int brickHeightNum = 4;
+	float originBrickWidth = brickHeight;
+	float originBrickHeight = brickWidth;
+
+	float padderWidth = brickWidth*1.2f;
+	float padderHeight = brickHeight;
+	float originPadderBottom = brickWidth;
+
+	float widthRequired = (brickWidth + brickBetween)*brickWidthNum - brickBetween + 2.0f*originBrickWidth;
+	float heightRequired = 4.0f*((brickHeight + brickBetween)*brickHeightNum - brickBetween) + originBrickHeight + originPadderBottom;	
+
+	Vec2 originWall;
 	FrameTimer timer;
 	Ball ball;
 	Rect wall;
-	Brick brick;
+	Brick bricks[brickWidthNum*brickHeightNum];
 	Padder padder;
+
 	/********************************/
 };

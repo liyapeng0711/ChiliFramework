@@ -71,3 +71,9 @@ void Rect::SetDown(float down)
 	rightDown.y = down;
 }
 
+void Rect::Move(Vec2 vec)
+{
+	leftUp += vec;
+	rightDown += vec;
+}
+

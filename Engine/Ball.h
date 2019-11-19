@@ -6,12 +6,13 @@
 class Ball
 {
 public:
-	Ball(Vec2 center, Vec2 vlocity);
+	Ball(Vec2 center, Vec2 velocity);
 	Rect GetRect()const;
 	void Draw(Graphics& gfx)const;
 	void Update(float dt);
 	void ReboundInRect(const Rect& rect);
 	bool ReboundOutRect(const Rect& rect);
+	bool ReboundOutRect(const Rect& rect, const Vec2& speed);
 	void ReboundX();
 	void ReboundY();
 private:
