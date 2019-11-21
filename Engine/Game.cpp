@@ -58,12 +58,34 @@ void Game::UpdateModel()
 	padder.Update(wnd.kbd, dt);
 
 	ball.ReboundInRect(wall);
-	for (auto& i : bricks)
+	int destroyIndex;
+	float centerDistSq;
+	bool hasPre = false;
+	for (int i = 0; i < brickWidthNum*brickHeightNum; ++i)
 	{
-		if (!i.IsDestroyed() && ball.ReboundOutRect(i.GetRect()))
+		if (!bricks[i].IsDestroyed() && ball.GetRect().TestCollision(bricks[i].GetRect()))
 		{
-			i.Destroy();
+			if (!hasPre)
+			{
+				destroyIndex = i;				
+				centerDistSq = (bricks[i].GetRect().GetCenter() - ball.GetCenter()).GetLengthSq();
+				hasPre = true;
+			}
+			else
+			{
+				float centerDistSqCur= (bricks[i].GetRect().GetCenter() - ball.GetCenter()).GetLengthSq();
+				if (centerDistSqCur < centerDistSq)
+				{
+					destroyIndex = i;
+					centerDistSq = centerDistSqCur;
+				}
+			}
 		}
+	}
+	if (hasPre)
+	{
+		ball.ReboundOutRect(bricks[destroyIndex].GetRect());
+		bricks[destroyIndex].Destroy();
 	}
 	ball.ReboundOutRect(padder.GetRect(),padder.GetSpeed());
 	padder.LimitInRect(wall);

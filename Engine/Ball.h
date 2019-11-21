@@ -15,6 +15,7 @@ public:
 	bool ReboundOutRect(const Rect& rect, const Vec2& speed);
 	void ReboundX();
 	void ReboundY();
+	Vec2 GetCenter()const;
 private:
 	Vec2 center;
 	static constexpr float width = 14.0f;

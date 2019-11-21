@@ -93,7 +93,7 @@ bool Ball::ReboundOutRect(const Rect & rect)
 			else
 			{
 				//center is inside the rect, not possible theoritically
-				assert(false);
+				//assert(false);
 			}
 		}
 		else if (y >= up&&y <= down) //in left or right area
@@ -125,7 +125,7 @@ bool Ball::ReboundOutRect(const Rect & rect)
 			else
 			{
 				//center is inside the rect, not possible theoritically
-				assert(false);
+				//assert(false);
 			}
 		}
 		else if (x < left&&y < up)//in leftup area
@@ -319,7 +319,7 @@ bool Ball::ReboundOutRect(const Rect & rect, const Vec2& speed)
 			else
 			{
 				//center is inside the rect, not possible theoritically
-				assert(false);
+				//assert(false);
 			}
 		}
 		else if (y >= up&&y <= down) //in left or right area
@@ -351,7 +351,7 @@ bool Ball::ReboundOutRect(const Rect & rect, const Vec2& speed)
 			else
 			{
 				//center is inside the rect, not possible theoritically
-				assert(false);
+				//assert(false);
 			}
 		}
 		else if (x < left&&y < up)//in leftup area
@@ -516,4 +516,9 @@ void Ball::ReboundX()
 void Ball::ReboundY()
 {
 	velocity.y = -velocity.y;
+}
+
+Vec2 Ball::GetCenter() const
+{
+	return center;
 }

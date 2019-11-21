@@ -51,6 +51,11 @@ Vec2 Rect::GetRightDown() const
 	return rightDown;
 }
 
+Vec2 Rect::GetCenter() const
+{
+	return (leftUp+rightDown)*0.5f;
+}
+
 void Rect::SetLeft(float left)
 {
 	leftUp.x = left;
