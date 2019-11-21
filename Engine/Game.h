@@ -81,6 +81,7 @@ private:
 		TITLE,
 		PLAYING,
 		OVER,
+		WIN
 	}status = TITLE;
 	/********************************/
 };

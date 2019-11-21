@@ -126,9 +126,25 @@ void Game::UpdateModel()
 			soundWall.Play();
 		}
 		padder.LimitInRect(wall);
+
+		bool isWin = true;
+		for (auto& i : bricks)
+		{
+			if (!i.IsDestroyed())
+			{
+				i.Draw(gfx);
+				isWin = false;
+				break;
+			}
+		}
+		if (isWin)
+		{
+			status = WIN;
+		}
 	}
 	break;
 	case OVER:
+	case WIN:
 		break;
 	}
 }
@@ -149,6 +165,7 @@ void Game::ComposeFrame()
 				i.Draw(gfx);
 			}
 		}
+
 		padder.Draw(gfx);
 		ball.Draw(gfx);
 		break;
@@ -165,5 +182,10 @@ void Game::ComposeFrame()
 		ball.Draw(gfx);
 		SpriteCodex::DrawGameOver(Vec2(float(Graphics::ScreenWidth / 2), float(Graphics::ScreenHeight / 2)), gfx);
 		break;
+	case WIN:
+		gfx.DrawRect(wall, Colors::Gray);
+		padder.Draw(gfx);
+		ball.Draw(gfx);
+		SpriteCodex::DrawReady(Vec2(float(Graphics::ScreenWidth / 2), float(Graphics::ScreenHeight / 2)), gfx);
 	}
 }
