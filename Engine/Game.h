@@ -29,6 +29,8 @@
 #include "Vec2.h"
 #include "Brick.h"
 #include "Padder.h"
+#include "Sound.h"
+
 class Game
 {
 public:
@@ -69,6 +71,16 @@ private:
 	Rect wall;
 	Brick bricks[brickWidthNum*brickHeightNum];
 	Padder padder;
-
+	Sound soundBrick;
+	Sound soundWall;
+	Sound soundDead;
+	Sound soundPrepare;
+	float timeForSound = 0.0f;
+	enum GameStatus
+	{
+		TITLE,
+		PLAYING,
+		OVER,
+	}status = TITLE;
 	/********************************/
 };

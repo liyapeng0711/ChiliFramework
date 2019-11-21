@@ -23,8 +23,9 @@ void Ball::Update(float dt)
 	center += velocity*dt;
 }
 
-void Ball::ReboundInRect(const Rect & rect)
+bool Ball::ReboundInRect(const Rect & rect)
 {
+	bool isRebound = false;
 	const float left = rect.GetLeftUp().x;
 	const float right = rect.GetRightDown().x;
 	const float up = rect.GetLeftUp().y;
@@ -33,22 +34,28 @@ void Ball::ReboundInRect(const Rect & rect)
 	{
 		center.x = left + width / 2.0f;
 		ReboundX();
+		isRebound = true;
 	}
 	else if (center.x + width / 2.0f > right)
 	{
 		center.x = right - width / 2.0f;
 		ReboundX();
+		isRebound = true;
 	}
 	if (center.y - height / 2.0f < up)
 	{
 		center.y = up + height / 2.0f;
 		ReboundY();
+		isRebound = true;
 	}
 	else if (center.y + height / 2.0f > down)
 	{
 		center.y = down - height / 2.0f;
 		ReboundY();
+		isRebound = true;
+		isDead = true;
 	}
+	return isRebound;
 }
 
 bool Ball::ReboundOutRect(const Rect & rect)
@@ -521,4 +528,9 @@ void Ball::ReboundY()
 Vec2 Ball::GetCenter() const
 {
 	return center;
+}
+
+bool Ball::IsDead() const
+{
+	return isDead;
 }

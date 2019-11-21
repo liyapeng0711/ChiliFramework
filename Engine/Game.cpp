@@ -29,7 +29,11 @@ Game::Game(MainWindow& wnd)
 	originWall((float(Graphics::ScreenWidth) - widthRequired) / 2.0f, (float(Graphics::ScreenHeight) - heightRequired) / 2.0f),
 	ball(originWall + Vec2(widthRequired / 2.0f, heightRequired / 2.0f), Vec2(-100.0f, -100.0f)),
 	wall(originWall, widthRequired, heightRequired),
-	padder(Rect(originWall+ Vec2(widthRequired/2.0f-padderWidth/2.0f, heightRequired - originPadderBottom - padderHeight), padderWidth, padderHeight))
+	padder(Rect(originWall+ Vec2(widthRequired/2.0f-padderWidth/2.0f, heightRequired - originPadderBottom - padderHeight), padderWidth, padderHeight)),
+	soundBrick(L"Sounds\\arkbrick.wav"),
+	soundWall(L"Sounds\\arkpad.wav"),
+	soundDead(L"Sounds\\fart.wav"),
+	soundPrepare(L"Sounds\\ready.wav")
 {
 	const Vec2 ori = originWall + Vec2(originBrickWidth, originBrickHeight);
 	Color brickColor[4] = { Colors::Blue, Colors::Cyan, Colors::Magenta,Colors::Red };
@@ -41,6 +45,7 @@ Game::Game(MainWindow& wnd)
 			bricks[i + j*brickWidthNum] = Brick(Rect(leftUp, brickWidth, brickHeight), brickColor[j % 4]);
 		}
 	}
+	soundPrepare.Play();
 }
 
 void Game::Go()
@@ -52,55 +57,113 @@ void Game::Go()
 }
 
 void Game::UpdateModel()
-{
+{	
 	float dt = timer.Mark();
-	ball.Update(dt);
-	padder.Update(wnd.kbd, dt);
-
-	ball.ReboundInRect(wall);
-	int destroyIndex;
-	float centerDistSq;
-	bool hasPre = false;
-	for (int i = 0; i < brickWidthNum*brickHeightNum; ++i)
+	switch (status)
 	{
-		if (!bricks[i].IsDestroyed() && ball.GetRect().TestCollision(bricks[i].GetRect()))
+	case TITLE:
+		timeForSound += dt;
+		if (timeForSound > 4.3f)
 		{
-			if (!hasPre)
+			soundPrepare.Play();
+			timeForSound = 0.0f;
+		}
+		if (wnd.kbd.KeyIsPressed(VK_RETURN))
+		{
+			status = PLAYING;
+			soundPrepare.StopAll();
+		}
+		break;
+	case PLAYING:
+	{
+		ball.Update(dt);
+		padder.Update(wnd.kbd, dt);
+
+		if (ball.ReboundInRect(wall))
+		{
+			if (ball.IsDead())
 			{
-				destroyIndex = i;				
-				centerDistSq = (bricks[i].GetRect().GetCenter() - ball.GetCenter()).GetLengthSq();
-				hasPre = true;
+				soundDead.Play();
+				status = OVER;
 			}
 			else
 			{
-				float centerDistSqCur= (bricks[i].GetRect().GetCenter() - ball.GetCenter()).GetLengthSq();
-				if (centerDistSqCur < centerDistSq)
+				soundWall.Play();
+			}
+		}
+		int destroyIndex;
+		float centerDistSq;
+		bool hasPre = false;
+		for (int i = 0; i < brickWidthNum*brickHeightNum; ++i)
+		{
+			if (!bricks[i].IsDestroyed() && ball.GetRect().TestCollision(bricks[i].GetRect()))
+			{
+				if (!hasPre)
 				{
 					destroyIndex = i;
-					centerDistSq = centerDistSqCur;
+					centerDistSq = (bricks[i].GetRect().GetCenter() - ball.GetCenter()).GetLengthSq();
+					hasPre = true;
+				}
+				else
+				{
+					float centerDistSqCur = (bricks[i].GetRect().GetCenter() - ball.GetCenter()).GetLengthSq();
+					if (centerDistSqCur < centerDistSq)
+					{
+						destroyIndex = i;
+						centerDistSq = centerDistSqCur;
+					}
 				}
 			}
 		}
+		if (hasPre)
+		{
+			ball.ReboundOutRect(bricks[destroyIndex].GetRect());
+			bricks[destroyIndex].Destroy();
+			soundBrick.Play();
+		}
+		if (ball.ReboundOutRect(padder.GetRect(), padder.GetSpeed()))
+		{
+			soundWall.Play();
+		}
+		padder.LimitInRect(wall);
 	}
-	if (hasPre)
-	{
-		ball.ReboundOutRect(bricks[destroyIndex].GetRect());
-		bricks[destroyIndex].Destroy();
+	break;
+	case OVER:
+		break;
 	}
-	ball.ReboundOutRect(padder.GetRect(),padder.GetSpeed());
-	padder.LimitInRect(wall);
 }
 
 void Game::ComposeFrame()
 {
-	gfx.DrawRect(wall, Colors::Gray);
-	for (auto& i : bricks)
+	switch (status)
 	{
-		if (!i.IsDestroyed())
+	case TITLE:
+		SpriteCodex::DrawTitle(Vec2(float(Graphics::ScreenWidth / 2), float(Graphics::ScreenHeight / 2)), gfx);
+		break;
+	case PLAYING:
+		gfx.DrawRect(wall, Colors::Gray);
+		for (auto& i : bricks)
 		{
-			i.Draw(gfx);
+			if (!i.IsDestroyed())
+			{
+				i.Draw(gfx);
+			}
 		}
+		padder.Draw(gfx);
+		ball.Draw(gfx);
+		break;
+	case OVER:
+		gfx.DrawRect(wall, Colors::Gray);
+		for (auto& i : bricks)
+		{
+			if (!i.IsDestroyed())
+			{
+				i.Draw(gfx);
+			}
+		}
+		padder.Draw(gfx);
+		ball.Draw(gfx);
+		SpriteCodex::DrawGameOver(Vec2(float(Graphics::ScreenWidth / 2), float(Graphics::ScreenHeight / 2)), gfx);
+		break;
 	}
-	padder.Draw(gfx);
-	ball.Draw(gfx);
 }
