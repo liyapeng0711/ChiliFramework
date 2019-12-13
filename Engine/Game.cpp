@@ -22,10 +22,10 @@
 #include "Game.h"
 #include <random>
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
+	wnd(wnd),
+	gfx(wnd)
 {
 
 }
@@ -40,10 +40,59 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-
+	float dt = timer.TimeFrame();
+	switch (status)
+	{
+	case LEVEL_CHOOSING:
+		status = levels.Update(wnd.mouse);
+		if (status == PLAYING)
+		{
+			board.Initialize(levels.GetLevel());
+			bar.Initialize(levels.GetLevel());
+		}
+		break;
+	case PLAYING:
+		status = board.Update(wnd.mouse);
+		if (status == GAME_WINNER || status == GAME_OVER)
+		{
+			bar.StopClock();
+		}
+		bar.UpdateClock(dt);
+		bar.UpdateFlag(board.GetRemainMineNum());
+		if (bar.IsRefresh(wnd.mouse))
+		{
+			levels.Initialize();
+		}
+		break;
+	case GAME_OVER:
+	case GAME_WINNER:
+		if (bar.IsRefresh(wnd.mouse))
+		{
+			levels.Initialize();
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::ComposeFrame()
 {
-
+	switch (status)
+	{
+	case LEVEL_CHOOSING:
+		levels.Draw(gfx);
+		break;
+	case PLAYING:
+		board.Draw(gfx);
+		bar.Draw(gfx);
+		break;
+	case GAME_OVER:
+	case GAME_WINNER:
+		board.DrawEnd(gfx);
+		bar.Draw(gfx);
+		break;
+	default:
+		break;
+	}
 }

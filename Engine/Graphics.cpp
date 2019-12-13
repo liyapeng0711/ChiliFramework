@@ -240,6 +240,23 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
+void Graphics::DrawRectRing(RectI rect, int thick, Color c)
+{
+	assert(rect.left - thick >= 0);
+	assert(rect.right + thick <= ScreenWidth);
+	assert(rect.up - thick >= 0);
+	assert(rect.down + thick <= ScreenHeight);
+	assert(-thick < rect.GetWidth() / 2 && -thick < rect.GetHeight() / 2);
+	RectI rectLeft({ rect.left - thick,rect.up - thick }, thick, rect.GetHeight() + 2 * thick);
+	RectI rectRight({ rect.right,rect.up - thick }, thick, rect.GetHeight() + 2 * thick);
+	RectI rectUp({ rect.left,rect.up - thick }, rect.GetWidth(), thick);
+	RectI rectDown({ rect.left,rect.down }, rect.GetWidth(), thick);
+	DrawRect(rectLeft, c);
+	DrawRect(rectRight, c);
+	DrawRect(rectUp, c);
+	DrawRect(rectDown, c);
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
@@ -325,7 +342,7 @@ void Graphics::Swap(int & a, int & b) const
 	b = temp;
 }
 
-void Graphics::DrawRect(int x0, int y0, int x1, int y1)
+void Graphics::DrawRect(int x0, int y0, int x1, int y1, Color c)
 {
 	if (x0 > x1)
 	{
@@ -339,7 +356,7 @@ void Graphics::DrawRect(int x0, int y0, int x1, int y1)
 	{
 		for (int j = y0; j < y1; j++)
 		{
-			PutPixel(i, j, 255, 255, 255);
+			PutPixel(i, j, c);
 		}
 	}
 }
