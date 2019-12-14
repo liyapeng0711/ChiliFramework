@@ -53,7 +53,7 @@ private:
 	Board board;
 	Bar bar;
 	Timer timer;
-	GameStatus status;
+	GameStatus status = LEVEL_CHOOSING;
 
 
 

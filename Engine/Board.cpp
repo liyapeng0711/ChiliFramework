@@ -25,11 +25,11 @@ GameStatus Board::Update(Mouse & mouse)
 			{
 				bool isFlaggedPre = cells[index].IsFlagged();
 				cells[index].ClickRight();
-				if (isFlaggedPre&&!cells[index].IsFlagged)
+				if (isFlaggedPre&&!cells[index].IsFlagged())
 				{
 					--numFlagged;
 				}
-				else if (!isFlaggedPre&&cells[index].IsFlagged)
+				else if (!isFlaggedPre&&cells[index].IsFlagged())
 				{
 					++numFlagged;
 				}

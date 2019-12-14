@@ -6,7 +6,7 @@
 
 RectI::RectI(Location leftUp, int width, int height)
 	:
-	RectI(leftUp.x, leftUp.y, leftUp.x+width, leftUp.y+height)
+	RectI(leftUp.x,  leftUp.x+width, leftUp.y, leftUp.y+height)
 {
 }
 
@@ -49,5 +49,5 @@ void RectI::DrawRing(Graphics & gfx, int thick, Color color) const
 
 RectI RectI::Expand(int padding) const
 {
-	return RectI(left - padding, up - padding, right + padding, down + padding);
+	return RectI(left - padding,  right + padding, up - padding, down + padding);
 }
